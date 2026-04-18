@@ -1,0 +1,282 @@
+[
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "Which retrieval stack is strongest for multi-hop frozen-corpus questions when the system only gets ten tool calls?",
+    "task_id": "dev_001",
+    "task_type": "constraint_selection"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "How should a scaffold handle comparison questions so it covers both supporting evidence and limitations instead of answering from one search?",
+    "task_id": "dev_002",
+    "task_type": "comparison"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "What memory policy is best for long autoresearch runs if the goal is to avoid repeated dead ends without carrying the whole transcript?",
+    "task_id": "dev_003",
+    "task_type": "methodology"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "Why is a facet-first evaluator more defensible than judging the final brief with a model alone?",
+    "task_id": "dev_004",
+    "task_type": "verification"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "What stop rule best fits a benchmark with visible time and tool budgets?",
+    "task_id": "dev_005",
+    "task_type": "constraint_selection"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "What is the strongest case for using evidence groups instead of rewarding any single valid citation?",
+    "task_id": "dev_006",
+    "task_type": "verification"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "How should the system handle contradictory evidence when some chunks support a claim and others mainly add caveats?",
+    "task_id": "dev_007",
+    "task_type": "comparison"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "Why are concise structured briefs usually better than long reasoning dumps in this kind of challenge?",
+    "task_id": "dev_008",
+    "task_type": "verification"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "For a fixed local corpus, which retrieval features should be treated as first-class search signals instead of decorative metadata?",
+    "task_id": "dev_009",
+    "task_type": "methodology"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "What is the strongest argument for keeping run artifacts and per-task score breakdowns instead of only a final scalar?",
+    "task_id": "dev_010",
+    "task_type": "verification"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "What reranking behavior best supports balanced tradeoff answers rather than one-sided result summaries?",
+    "task_id": "dev_011",
+    "task_type": "comparison"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "How should query expansion be used if the benchmark has hard call and token budgets?",
+    "task_id": "dev_012",
+    "task_type": "constraint_selection"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "What is the strongest case for critique-guided retries instead of simply asking the scaffold to try again?",
+    "task_id": "dev_013",
+    "task_type": "comparison"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "Why does paragraph-scale chunking usually beat both single-sentence chunks and giant windows when citations are graded strictly?",
+    "task_id": "dev_014",
+    "task_type": "methodology"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "When a task asks for the best approach under a named constraint, what should the final brief optimize for?",
+    "task_id": "dev_015",
+    "task_type": "constraint_selection"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "How should lightweight notes be used without wasting the same budget they are meant to protect?",
+    "task_id": "dev_016",
+    "task_type": "methodology"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "Why is source diversity a better coverage signal than simply citing more chunks from the same paper?",
+    "task_id": "dev_017",
+    "task_type": "methodology"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "Why should citation validity rely on fixed support chunk sets instead of looser semantic grading in v1?",
+    "task_id": "dev_018",
+    "task_type": "verification"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "What exactly should an LLM judge still do after rule-based facet and citation checks exist?",
+    "task_id": "dev_019",
+    "task_type": "verification"
+  },
+  {
+    "budget": {
+      "max_citations": 4,
+      "max_search_results": 8,
+      "max_time_seconds": 15,
+      "max_tokens": 2200,
+      "max_tool_calls": 10
+    },
+    "corpus_pack_id": "frozen_autoresearch_v1",
+    "expected_output_schema": "challenge/schemas/submission_output.schema.json",
+    "question": "Why do titles, section labels, and header cues matter so much for frozen-corpus retrieval quality?",
+    "task_id": "dev_020",
+    "task_type": "methodology"
+  }
+]

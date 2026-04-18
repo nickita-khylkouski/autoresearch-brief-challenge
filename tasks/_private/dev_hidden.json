@@ -1,0 +1,1519 @@
+[
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_001_c03",
+          "src_001_c06"
+        ],
+        "group_id": "method"
+      },
+      {
+        "chunk_ids": [
+          "src_011_c03",
+          "src_011_c06"
+        ],
+        "group_id": "budget"
+      },
+      {
+        "chunk_ids": [
+          "src_001_c04",
+          "src_011_c04"
+        ],
+        "group_id": "tradeoff"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "hybrid_stage",
+        "match_any": [
+          [
+            "hybrid lexical dense"
+          ],
+          [
+            "lexical plus dense"
+          ],
+          [
+            "merged dense lexical"
+          ]
+        ]
+      },
+      {
+        "facet_id": "rerank_small_pool",
+        "match_any": [
+          [
+            "reranker cut candidate pool"
+          ],
+          [
+            "reranking before drafting"
+          ],
+          [
+            "small dense pool"
+          ]
+        ]
+      },
+      {
+        "facet_id": "latency_cap",
+        "match_any": [
+          [
+            "tool budget"
+          ],
+          [
+            "small candidate pool"
+          ],
+          [
+            "latency budget"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_001",
+    "valid_citation_chunk_ids": [
+      "src_001_c03",
+      "src_001_c04",
+      "src_001_c06",
+      "src_011_c03",
+      "src_011_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_002_c03",
+          "src_002_c06"
+        ],
+        "group_id": "decomposition"
+      },
+      {
+        "chunk_ids": [
+          "src_002_c04",
+          "src_004_c06"
+        ],
+        "group_id": "stopping"
+      },
+      {
+        "chunk_ids": [
+          "src_012_c03",
+          "src_015_c04"
+        ],
+        "group_id": "limitation"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "decompose",
+        "match_any": [
+          [
+            "decomposing comparison prompts"
+          ],
+          [
+            "targeted subqueries"
+          ],
+          [
+            "subqueries for method evidence limitation"
+          ]
+        ]
+      },
+      {
+        "facet_id": "stop_rule",
+        "match_any": [
+          [
+            "marginal gain stop rule"
+          ],
+          [
+            "stop once evidence groups are covered"
+          ],
+          [
+            "diminishing returns"
+          ]
+        ]
+      },
+      {
+        "facet_id": "limitation_balance",
+        "match_any": [
+          [
+            "limitation evidence"
+          ],
+          [
+            "tradeoff source"
+          ],
+          [
+            "balanced answer"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_002",
+    "valid_citation_chunk_ids": [
+      "src_002_c03",
+      "src_002_c04",
+      "src_002_c06",
+      "src_012_c03",
+      "src_015_c04"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_003_c03",
+          "src_003_c06"
+        ],
+        "group_id": "policy"
+      },
+      {
+        "chunk_ids": [
+          "src_003_c04",
+          "src_017_c03"
+        ],
+        "group_id": "failure_memory"
+      },
+      {
+        "chunk_ids": [
+          "src_017_c03",
+          "src_017_c06"
+        ],
+        "group_id": "notes"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "compressed_memory",
+        "match_any": [
+          [
+            "compressed memory"
+          ],
+          [
+            "structured memory"
+          ],
+          [
+            "compact memory"
+          ]
+        ]
+      },
+      {
+        "facet_id": "record_failures",
+        "match_any": [
+          [
+            "failed branches"
+          ],
+          [
+            "failed evidence paths"
+          ],
+          [
+            "anti-pattern notes"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_transcript",
+        "match_any": [
+          [
+            "whole transcript"
+          ],
+          [
+            "transcript carryover"
+          ],
+          [
+            "instead of replaying the whole session"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_003",
+    "valid_citation_chunk_ids": [
+      "src_003_c03",
+      "src_003_c04",
+      "src_003_c06",
+      "src_017_c03",
+      "src_017_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_005_c03",
+          "src_005_c06"
+        ],
+        "group_id": "rule_checks"
+      },
+      {
+        "chunk_ids": [
+          "src_006_c03",
+          "src_006_c06"
+        ],
+        "group_id": "facets"
+      },
+      {
+        "chunk_ids": [
+          "src_006_c05"
+        ],
+        "group_id": "contradictions"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "hidden_facets",
+        "match_any": [
+          [
+            "hidden answer facets"
+          ],
+          [
+            "facet first scoring"
+          ],
+          [
+            "facet checklist"
+          ]
+        ]
+      },
+      {
+        "facet_id": "contradictions",
+        "match_any": [
+          [
+            "forbidden claims"
+          ],
+          [
+            "hidden contradictions"
+          ],
+          [
+            "contradiction checks"
+          ]
+        ]
+      },
+      {
+        "facet_id": "narrow_judge",
+        "match_any": [
+          [
+            "judge only for synthesis"
+          ],
+          [
+            "narrow synthesis layer"
+          ],
+          [
+            "reserve model judges"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_004",
+    "valid_citation_chunk_ids": [
+      "src_005_c03",
+      "src_005_c06",
+      "src_006_c03",
+      "src_006_c05",
+      "src_006_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_004_c03",
+          "src_004_c06"
+        ],
+        "group_id": "core_rule"
+      },
+      {
+        "chunk_ids": [
+          "src_004_c04"
+        ],
+        "group_id": "failure_mode"
+      },
+      {
+        "chunk_ids": [
+          "src_009_c03"
+        ],
+        "group_id": "novelty_signal"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "marginal_gain",
+        "match_any": [
+          [
+            "marginal gain stop rule"
+          ],
+          [
+            "new calls stop adding evidence groups"
+          ],
+          [
+            "halt once new searches stop expanding evidence coverage"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_fixed_depth",
+        "match_any": [
+          [
+            "fixed depth loops"
+          ],
+          [
+            "stopped too early"
+          ],
+          [
+            "burned budget"
+          ]
+        ]
+      },
+      {
+        "facet_id": "track_novelty",
+        "match_any": [
+          [
+            "new evidence groups"
+          ],
+          [
+            "novel support chunks"
+          ],
+          [
+            "source diversity"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_005",
+    "valid_citation_chunk_ids": [
+      "src_004_c03",
+      "src_004_c04",
+      "src_004_c06",
+      "src_009_c03"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_015_c02",
+          "src_015_c06"
+        ],
+        "group_id": "definition"
+      },
+      {
+        "chunk_ids": [
+          "src_015_c03"
+        ],
+        "group_id": "benefit"
+      },
+      {
+        "chunk_ids": [
+          "src_015_c04",
+          "src_009_c06"
+        ],
+        "group_id": "comparison_need"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "multi_group",
+        "match_any": [
+          [
+            "evidence groups"
+          ],
+          [
+            "span all required evidence groups"
+          ],
+          [
+            "method support limitation"
+          ]
+        ]
+      },
+      {
+        "facet_id": "prevent_shallow_wins",
+        "match_any": [
+          [
+            "one strong quote"
+          ],
+          [
+            "shallow systems"
+          ],
+          [
+            "narrow but eloquent support"
+          ]
+        ]
+      },
+      {
+        "facet_id": "multi_hop",
+        "match_any": [
+          [
+            "multi hop"
+          ],
+          [
+            "comparison tasks"
+          ],
+          [
+            "different chunks"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_006",
+    "valid_citation_chunk_ids": [
+      "src_015_c02",
+      "src_015_c03",
+      "src_015_c04",
+      "src_015_c06",
+      "src_009_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_007_c02",
+          "src_007_c06"
+        ],
+        "group_id": "policy"
+      },
+      {
+        "chunk_ids": [
+          "src_007_c03",
+          "src_007_c04"
+        ],
+        "group_id": "why"
+      },
+      {
+        "chunk_ids": [
+          "src_007_c05"
+        ],
+        "group_id": "risk"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "separate_buckets",
+        "match_any": [
+          [
+            "support and limitation evidence separately"
+          ],
+          [
+            "evidence buckets"
+          ],
+          [
+            "supportive evidence limiting evidence"
+          ]
+        ]
+      },
+      {
+        "facet_id": "surface_caveats",
+        "match_any": [
+          [
+            "main limitation"
+          ],
+          [
+            "surface both"
+          ],
+          [
+            "caveats"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_majority_vote",
+        "match_any": [
+          [
+            "majority voting"
+          ],
+          [
+            "single sided conclusion"
+          ],
+          [
+            "erased important caveats"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_007",
+    "valid_citation_chunk_ids": [
+      "src_007_c02",
+      "src_007_c03",
+      "src_007_c04",
+      "src_007_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_018_c03",
+          "src_005_c04"
+        ],
+        "group_id": "validation"
+      },
+      {
+        "chunk_ids": [
+          "src_018_c04",
+          "src_018_c05"
+        ],
+        "group_id": "risk"
+      },
+      {
+        "chunk_ids": [
+          "src_018_c06"
+        ],
+        "group_id": "format"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "easy_to_validate",
+        "match_any": [
+          [
+            "easier to validate"
+          ],
+          [
+            "hidden facets"
+          ],
+          [
+            "citation rules"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_side_claims",
+        "match_any": [
+          [
+            "unsupported side claims"
+          ],
+          [
+            "contradiction penalties"
+          ],
+          [
+            "mixed speculation"
+          ]
+        ]
+      },
+      {
+        "facet_id": "short_structured",
+        "match_any": [
+          [
+            "short structured briefs"
+          ],
+          [
+            "concise briefs"
+          ],
+          [
+            "avoid long chain of thought"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_008",
+    "valid_citation_chunk_ids": [
+      "src_018_c03",
+      "src_018_c04",
+      "src_018_c06",
+      "src_005_c04"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_016_c03",
+          "src_016_c06"
+        ],
+        "group_id": "features"
+      },
+      {
+        "chunk_ids": [
+          "src_016_c04"
+        ],
+        "group_id": "rationale"
+      },
+      {
+        "chunk_ids": [
+          "src_012_c06"
+        ],
+        "group_id": "reranking_use"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "titles_sections",
+        "match_any": [
+          [
+            "titles and sections"
+          ],
+          [
+            "title tokens"
+          ],
+          [
+            "section labels"
+          ]
+        ]
+      },
+      {
+        "facet_id": "metadata_search",
+        "match_any": [
+          [
+            "metadata first retrieval"
+          ],
+          [
+            "first class search features"
+          ],
+          [
+            "index metadata"
+          ]
+        ]
+      },
+      {
+        "facet_id": "why_headers",
+        "match_any": [
+          [
+            "headers"
+          ],
+          [
+            "methodology or limitation evidence"
+          ],
+          [
+            "body used pronouns"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_009",
+    "valid_citation_chunk_ids": [
+      "src_016_c03",
+      "src_016_c04",
+      "src_016_c06",
+      "src_012_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_013_c03",
+          "src_013_c04"
+        ],
+        "group_id": "visibility"
+      },
+      {
+        "chunk_ids": [
+          "src_013_c05"
+        ],
+        "group_id": "risk"
+      },
+      {
+        "chunk_ids": [
+          "src_013_c06"
+        ],
+        "group_id": "recommendation"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "debug_failure_modes",
+        "match_any": [
+          [
+            "retrieval citation validity or synthesis coverage"
+          ],
+          [
+            "failure modes"
+          ],
+          [
+            "why a run failed"
+          ]
+        ]
+      },
+      {
+        "facet_id": "improve_faster",
+        "match_any": [
+          [
+            "improved faster"
+          ],
+          [
+            "next change"
+          ],
+          [
+            "component scores"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_random_tweaks",
+        "match_any": [
+          [
+            "random tweaking"
+          ],
+          [
+            "single scalar scores"
+          ],
+          [
+            "could not see why"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_010",
+    "valid_citation_chunk_ids": [
+      "src_013_c03",
+      "src_013_c04",
+      "src_013_c05",
+      "src_013_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_012_c03",
+          "src_012_c06"
+        ],
+        "group_id": "approach"
+      },
+      {
+        "chunk_ids": [
+          "src_012_c04"
+        ],
+        "group_id": "benefit"
+      },
+      {
+        "chunk_ids": [
+          "src_012_c05"
+        ],
+        "group_id": "failure"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "metadata_aware",
+        "match_any": [
+          [
+            "metadata aware reranking"
+          ],
+          [
+            "evidence type tags"
+          ],
+          [
+            "section and evidence type metadata"
+          ]
+        ]
+      },
+      {
+        "facet_id": "result_and_limitation",
+        "match_any": [
+          [
+            "one result chunk and one limitation chunk"
+          ],
+          [
+            "balanced answers"
+          ],
+          [
+            "tradeoff discussion"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_text_only",
+        "match_any": [
+          [
+            "text only reranking"
+          ],
+          [
+            "over selected result sections"
+          ],
+          [
+            "skipped limitation evidence"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_011",
+    "valid_citation_chunk_ids": [
+      "src_012_c03",
+      "src_012_c04",
+      "src_012_c05",
+      "src_012_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_011_c02",
+          "src_011_c06"
+        ],
+        "group_id": "policy"
+      },
+      {
+        "chunk_ids": [
+          "src_011_c03"
+        ],
+        "group_id": "benefit"
+      },
+      {
+        "chunk_ids": [
+          "src_011_c04",
+          "src_011_c05"
+        ],
+        "group_id": "risk"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "limited_expansion",
+        "match_any": [
+          [
+            "limited query expansion"
+          ],
+          [
+            "one or two key terms"
+          ],
+          [
+            "expand only the high value terms"
+          ]
+        ]
+      },
+      {
+        "facet_id": "preserve_budget",
+        "match_any": [
+          [
+            "preserve budget for reranking and verification"
+          ],
+          [
+            "without breaking the budget"
+          ],
+          [
+            "keep the pool small"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_unbounded",
+        "match_any": [
+          [
+            "unbounded synonym expansion"
+          ],
+          [
+            "near duplicate results"
+          ],
+          [
+            "budget penalties"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_012",
+    "valid_citation_chunk_ids": [
+      "src_011_c02",
+      "src_011_c03",
+      "src_011_c04",
+      "src_011_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_010_c02",
+          "src_010_c06"
+        ],
+        "group_id": "diagnosis"
+      },
+      {
+        "chunk_ids": [
+          "src_010_c03"
+        ],
+        "group_id": "benefit"
+      },
+      {
+        "chunk_ids": [
+          "src_010_c04",
+          "src_010_c05"
+        ],
+        "group_id": "failure"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "diagnose_missing",
+        "match_any": [
+          [
+            "missing facet"
+          ],
+          [
+            "weak citation"
+          ],
+          [
+            "retrieval gap"
+          ]
+        ]
+      },
+      {
+        "facet_id": "target_next_round",
+        "match_any": [
+          [
+            "targeted a missing facet"
+          ],
+          [
+            "before starting another retrieval round"
+          ],
+          [
+            "failure diagnosis"
+          ]
+        ]
+      },
+      {
+        "facet_id": "blind_retry_problem",
+        "match_any": [
+          [
+            "blind retries"
+          ],
+          [
+            "paraphrased the same weak evidence"
+          ],
+          [
+            "repeated the first retrieval query"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_013",
+    "valid_citation_chunk_ids": [
+      "src_010_c02",
+      "src_010_c03",
+      "src_010_c04",
+      "src_010_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_008_c03",
+          "src_008_c06"
+        ],
+        "group_id": "recommended_size"
+      },
+      {
+        "chunk_ids": [
+          "src_008_c04"
+        ],
+        "group_id": "large_chunk_risk"
+      },
+      {
+        "chunk_ids": [
+          "src_008_c05"
+        ],
+        "group_id": "small_chunk_risk"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "paragraph_scale",
+        "match_any": [
+          [
+            "paragraph scale chunks"
+          ],
+          [
+            "mid sized chunks"
+          ],
+          [
+            "local context"
+          ]
+        ]
+      },
+      {
+        "facet_id": "precision_tradeoff",
+        "match_any": [
+          [
+            "weakened citation precision"
+          ],
+          [
+            "mixed together"
+          ],
+          [
+            "very large chunks"
+          ]
+        ]
+      },
+      {
+        "facet_id": "sentence_fragmentation",
+        "match_any": [
+          [
+            "single sentence chunks"
+          ],
+          [
+            "fragmented methodology descriptions"
+          ],
+          [
+            "too many retrieval calls"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_014",
+    "valid_citation_chunk_ids": [
+      "src_008_c03",
+      "src_008_c04",
+      "src_008_c05",
+      "src_008_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_014_c03",
+          "src_014_c06"
+        ],
+        "group_id": "selection_rule"
+      },
+      {
+        "chunk_ids": [
+          "src_014_c04"
+        ],
+        "group_id": "tradeoff"
+      },
+      {
+        "chunk_ids": [
+          "src_014_c05"
+        ],
+        "group_id": "failure"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "align_to_constraint",
+        "match_any": [
+          [
+            "align the answer to the named constraint"
+          ],
+          [
+            "constraint aware selection"
+          ],
+          [
+            "fit the constraint"
+          ]
+        ]
+      },
+      {
+        "facet_id": "not_absolute_accuracy",
+        "match_any": [
+          [
+            "not always optimal"
+          ],
+          [
+            "highest unconstrained accuracy"
+          ],
+          [
+            "slow methods often lost"
+          ]
+        ]
+      },
+      {
+        "facet_id": "state_reason",
+        "match_any": [
+          [
+            "named the winning method and the reason"
+          ],
+          [
+            "reason it fit the constraint"
+          ],
+          [
+            "explicitly named the winning method"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_015",
+    "valid_citation_chunk_ids": [
+      "src_014_c03",
+      "src_014_c04",
+      "src_014_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_017_c02",
+          "src_017_c06"
+        ],
+        "group_id": "how_to_note"
+      },
+      {
+        "chunk_ids": [
+          "src_017_c03",
+          "src_017_c04"
+        ],
+        "group_id": "benefit"
+      },
+      {
+        "chunk_ids": [
+          "src_017_c05"
+        ],
+        "group_id": "risk"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "claim_linked_notes",
+        "match_any": [
+          [
+            "claim linked"
+          ],
+          [
+            "which claim a chunk supported"
+          ],
+          [
+            "remaining gap"
+          ]
+        ]
+      },
+      {
+        "facet_id": "help_verification",
+        "match_any": [
+          [
+            "improved verification"
+          ],
+          [
+            "without rereading every chunk"
+          ],
+          [
+            "remember why a citation was chosen"
+          ]
+        ]
+      },
+      {
+        "facet_id": "avoid_verbose",
+        "match_any": [
+          [
+            "verbose note dumps"
+          ],
+          [
+            "duplicated chunk text"
+          ],
+          [
+            "use notes sparingly"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_016",
+    "valid_citation_chunk_ids": [
+      "src_017_c02",
+      "src_017_c03",
+      "src_017_c04",
+      "src_017_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_009_c03",
+          "src_009_c06"
+        ],
+        "group_id": "signal"
+      },
+      {
+        "chunk_ids": [
+          "src_009_c04"
+        ],
+        "group_id": "mix"
+      },
+      {
+        "chunk_ids": [
+          "src_009_c05"
+        ],
+        "group_id": "risk"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "source_diversity",
+        "match_any": [
+          [
+            "source diversity"
+          ],
+          [
+            "diverse sources"
+          ],
+          [
+            "multiple sources"
+          ]
+        ]
+      },
+      {
+        "facet_id": "method_limitation_mix",
+        "match_any": [
+          [
+            "method source and one limitation"
+          ],
+          [
+            "method and limitation source"
+          ],
+          [
+            "method result and limitation evidence"
+          ]
+        ]
+      },
+      {
+        "facet_id": "not_raw_chunk_count",
+        "match_any": [
+          [
+            "better than raw chunk count"
+          ],
+          [
+            "raw chunk count"
+          ],
+          [
+            "same source looked thorough"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_017",
+    "valid_citation_chunk_ids": [
+      "src_009_c03",
+      "src_009_c04",
+      "src_009_c05",
+      "src_009_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_005_c02",
+          "src_005_c06"
+        ],
+        "group_id": "definition"
+      },
+      {
+        "chunk_ids": [
+          "src_005_c03"
+        ],
+        "group_id": "benefit"
+      },
+      {
+        "chunk_ids": [
+          "src_005_c05"
+        ],
+        "group_id": "failure"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "support_sets",
+        "match_any": [
+          [
+            "support chunk sets"
+          ],
+          [
+            "predeclared support chunks"
+          ],
+          [
+            "fixed support chunk sets"
+          ]
+        ]
+      },
+      {
+        "facet_id": "fast_reproducible",
+        "match_any": [
+          [
+            "faster and more reproducible"
+          ],
+          [
+            "strict overlap"
+          ],
+          [
+            "citation validity"
+          ]
+        ]
+      },
+      {
+        "facet_id": "loose_grading_fails",
+        "match_any": [
+          [
+            "loose citation grading"
+          ],
+          [
+            "unsupported chunks"
+          ],
+          [
+            "inflated scores"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_018",
+    "valid_citation_chunk_ids": [
+      "src_005_c02",
+      "src_005_c03",
+      "src_005_c05",
+      "src_005_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_005_c04",
+          "src_006_c06"
+        ],
+        "group_id": "judge_role"
+      },
+      {
+        "chunk_ids": [
+          "src_006_c03"
+        ],
+        "group_id": "facets"
+      },
+      {
+        "chunk_ids": [
+          "src_006_c05"
+        ],
+        "group_id": "contradictions"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "judge_after_rules",
+        "match_any": [
+          [
+            "judge only for synthesis"
+          ],
+          [
+            "narrow synthesis layer"
+          ],
+          [
+            "after rule based citation checks"
+          ]
+        ]
+      },
+      {
+        "facet_id": "facets_primary",
+        "match_any": [
+          [
+            "hidden facets"
+          ],
+          [
+            "facets primary"
+          ],
+          [
+            "facet first"
+          ]
+        ]
+      },
+      {
+        "facet_id": "contradictions_needed",
+        "match_any": [
+          [
+            "hidden contradictions"
+          ],
+          [
+            "subtle but important errors"
+          ],
+          [
+            "contradiction checks"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_019",
+    "valid_citation_chunk_ids": [
+      "src_005_c04",
+      "src_006_c03",
+      "src_006_c05",
+      "src_006_c06"
+    ]
+  },
+  {
+    "evidence_groups": [
+      {
+        "chunk_ids": [
+          "src_016_c03",
+          "src_016_c06"
+        ],
+        "group_id": "signal"
+      },
+      {
+        "chunk_ids": [
+          "src_016_c04"
+        ],
+        "group_id": "rationale"
+      },
+      {
+        "chunk_ids": [
+          "src_016_c05"
+        ],
+        "group_id": "failure"
+      }
+    ],
+    "forbidden_claims": [],
+    "required_facets": [
+      {
+        "facet_id": "headers_matter",
+        "match_any": [
+          [
+            "header named the relevant method"
+          ],
+          [
+            "headers"
+          ],
+          [
+            "title field"
+          ]
+        ]
+      },
+      {
+        "facet_id": "titles_and_sections",
+        "match_any": [
+          [
+            "titles and sections"
+          ],
+          [
+            "title tokens"
+          ],
+          [
+            "section labels"
+          ]
+        ]
+      },
+      {
+        "facet_id": "body_pronouns_fail",
+        "match_any": [
+          [
+            "body used pronouns"
+          ],
+          [
+            "plain text search missed"
+          ],
+          [
+            "ignoring metadata"
+          ]
+        ]
+      }
+    ],
+    "task_id": "dev_020",
+    "valid_citation_chunk_ids": [
+      "src_016_c03",
+      "src_016_c04",
+      "src_016_c05",
+      "src_016_c06"
+    ]
+  }
+]

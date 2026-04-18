@@ -1,0 +1,19 @@
+{
+  "metadata": {
+    "name": "baseline",
+    "version": "1.0.0",
+    "models": [
+      "local-heuristic"
+    ],
+    "expected_token_budget": 2200
+  },
+  "retrieval": {
+    "top_k": 6,
+    "rerank_top_n": 4
+  },
+  "citation_count": 3,
+  "prompt_files": {
+    "planner": "prompts/planner.txt",
+    "synthesizer": "prompts/synthesizer.txt"
+  }
+}

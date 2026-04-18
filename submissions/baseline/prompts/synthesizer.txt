@@ -1,0 +1,7 @@
+Write a concise evidence-backed brief.
+
+Rules:
+- answer directly
+- cite only retrieved chunks
+- do not add unsupported side claims
+- keep the answer short enough for deterministic scoring

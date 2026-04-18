@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Regenerate seed data
+        run: python3 scripts/generate_autoresearch_challenge_seed.py
+      - name: Validate baseline
+        run: python3 validate_submission.py --submission submissions/baseline
+      - name: Run dev evaluation
+        run: python3 evaluate.py --split dev --submission submissions/baseline
+      - name: Run tests
+        run: python3 -m unittest discover -s tests -p 'test_*.py' -v

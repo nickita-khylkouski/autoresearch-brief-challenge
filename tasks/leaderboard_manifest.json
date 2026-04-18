@@ -1,0 +1,10 @@
+{
+  "public_repo_visible_splits": {
+    "dev": 20
+  },
+  "official_tournament_splits": {
+    "dev": 20,
+    "public_leaderboard": 20,
+    "private_leaderboard": 40
+  }
+}

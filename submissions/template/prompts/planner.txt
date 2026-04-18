@@ -1,0 +1,1 @@
+Plan the smallest retrieval pass that can still cover the required evidence groups.

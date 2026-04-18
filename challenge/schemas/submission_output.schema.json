@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AutoResearch Brief Challenge Output",
+  "type": "object",
+  "required": ["answer", "citations"],
+  "properties": {
+    "answer": { "type": "string" },
+    "citations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "anyOf": [
+        { "type": "string" },
+        { "type": "array" },
+        { "type": "object" },
+        { "type": "null" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1082 @@
+[
+  {
+    "chunk_id": "src_001_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_001",
+    "source_type": "study",
+    "text": "The study evaluated frozen local corpora where every answer had to be produced within ten tool calls and a laptop-friendly latency budget.",
+    "title": "Hybrid Retrieval Under Tight Tool Budgets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_001_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_001",
+    "source_type": "study",
+    "text": "Researchers compared lexical retrieval, dense retrieval, and a merged hybrid stage over the same 132 chunk corpus pack.",
+    "title": "Hybrid Retrieval Under Tight Tool Budgets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_001_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_001",
+    "source_type": "study",
+    "text": "Hybrid lexical plus dense retrieval raised answer recall by 14 points over lexical-only search on multi-hop questions.",
+    "title": "Hybrid Retrieval Under Tight Tool Budgets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_001_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_001",
+    "source_type": "study",
+    "text": "Precision recovered only when a reranker cut the merged candidate pool from 24 chunks down to 6 chunks before synthesis.",
+    "title": "Hybrid Retrieval Under Tight Tool Budgets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_001_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_001",
+    "source_type": "study",
+    "text": "Dense-only retrieval regularly missed exact method names and section labels that were easy for lexical search to recover.",
+    "title": "Hybrid Retrieval Under Tight Tool Budgets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_001_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_001",
+    "source_type": "study",
+    "text": "The paper recommends keeping lexical search in the first stage, merging a small dense pool, and reranking before drafting.",
+    "title": "Hybrid Retrieval Under Tight Tool Budgets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_002_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_002",
+    "source_type": "study",
+    "text": "This benchmark focused on comparison questions that required method evidence, tradeoffs, and limitations from separate sources.",
+    "title": "Query Decomposition For Comparison Tasks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_002_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_002",
+    "source_type": "study",
+    "text": "A decomposition planner generated subqueries for method, evidence, limitation, and constraint handling before retrieval.",
+    "title": "Query Decomposition For Comparison Tasks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_002_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_002",
+    "source_type": "study",
+    "text": "Decomposing comparison prompts raised evidence coverage from 0.41 to 0.73 because the system stopped collapsing every need into one search string.",
+    "title": "Query Decomposition For Comparison Tasks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_002_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_002",
+    "source_type": "study",
+    "text": "The extra subqueries only paid off when the stop rule terminated after marginal gains flattened across the evidence groups.",
+    "title": "Query Decomposition For Comparison Tasks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_002_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_002",
+    "source_type": "study",
+    "text": "Naive decomposition without a stop rule wasted tool calls and repeated near-duplicate chunks.",
+    "title": "Query Decomposition For Comparison Tasks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_002_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_002",
+    "source_type": "study",
+    "text": "Use targeted subqueries for evidence groups, then stop once method, limitation, and comparison evidence are all covered.",
+    "title": "Query Decomposition For Comparison Tasks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_003_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_003",
+    "source_type": "report",
+    "text": "A long-horizon autoresearch run compared carrying the full transcript against writing structured memory after each round.",
+    "title": "Memory Compression Beats Full Transcript Carryover",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_003_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_003",
+    "source_type": "report",
+    "text": "The structured memory template stored tried queries, failed evidence paths, useful source ids, and open gaps for the next round.",
+    "title": "Memory Compression Beats Full Transcript Carryover",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_003_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_003",
+    "source_type": "report",
+    "text": "Compressed memory preserved answer quality while cutting prompt footprint by 38 percent relative to transcript carryover.",
+    "title": "Memory Compression Beats Full Transcript Carryover",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_003_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_003",
+    "source_type": "report",
+    "text": "Runs with explicit anti-pattern notes avoided repeating dead-end queries in later rounds.",
+    "title": "Memory Compression Beats Full Transcript Carryover",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_003_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_003",
+    "source_type": "report",
+    "text": "Transcript carryover caused later rounds to anchor on stale failed hypotheses and to over-repeat earlier wording.",
+    "title": "Memory Compression Beats Full Transcript Carryover",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_003_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_003",
+    "source_type": "report",
+    "text": "Keep a compact memory that records winning evidence, failed branches, and unresolved gaps instead of replaying the whole session.",
+    "title": "Memory Compression Beats Full Transcript Carryover",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_004_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_004",
+    "source_type": "study",
+    "text": "This evaluation measured how different stop rules behaved when retrieval and synthesis were bounded by visible budgets.",
+    "title": "Marginal Gain Stop Rules For Research Loops",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_004_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_004",
+    "source_type": "study",
+    "text": "The strongest variant tracked whether each new tool call added a new evidence group or a previously unseen supporting chunk.",
+    "title": "Marginal Gain Stop Rules For Research Loops",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_004_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_004",
+    "source_type": "study",
+    "text": "A marginal gain stop rule improved average score because it halted once new searches stopped expanding evidence coverage.",
+    "title": "Marginal Gain Stop Rules For Research Loops",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_004_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_004",
+    "source_type": "study",
+    "text": "Simple fixed-depth loops either stopped too early on hard tasks or burned budget on repetitive searches.",
+    "title": "Marginal Gain Stop Rules For Research Loops",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_004_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_004",
+    "source_type": "study",
+    "text": "Counting raw search hits as progress created false confidence even when the hits repeated the same claim.",
+    "title": "Marginal Gain Stop Rules For Research Loops",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_004_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_004",
+    "source_type": "study",
+    "text": "Stop when new calls stop adding evidence groups, new source diversity, or novel support chunks.",
+    "title": "Marginal Gain Stop Rules For Research Loops",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_005_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_005",
+    "source_type": "spec",
+    "text": "The spec defines citation validity for a benchmark where every cited chunk must exist and support the relevant claim.",
+    "title": "Strict Citation Checks For Frozen Corpus Benchmarks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_005_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_005",
+    "source_type": "spec",
+    "text": "Valid citations were measured against known support chunk sets rather than against an open-ended semantic verifier.",
+    "title": "Strict Citation Checks For Frozen Corpus Benchmarks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_005_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_005",
+    "source_type": "spec",
+    "text": "Strict overlap with predeclared support chunks made scoring faster and more reproducible than freeform citation judging.",
+    "title": "Strict Citation Checks For Frozen Corpus Benchmarks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_005_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_005",
+    "source_type": "spec",
+    "text": "The benchmark only needed the judge model for synthesis nuance after rule-based citation checks had already run.",
+    "title": "Strict Citation Checks For Frozen Corpus Benchmarks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_005_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_005",
+    "source_type": "spec",
+    "text": "Loose citation grading let polished answers cite nearby but unsupported chunks and still earn inflated scores.",
+    "title": "Strict Citation Checks For Frozen Corpus Benchmarks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_005_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_005",
+    "source_type": "spec",
+    "text": "Use fixed support chunk sets for citation validity and reserve model judges for narrow synthesis disputes.",
+    "title": "Strict Citation Checks For Frozen Corpus Benchmarks",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_006_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_006",
+    "source_type": "study",
+    "text": "Researchers compared pure LLM judging against a hybrid scorer with hidden answer facets, contradictions, and evidence groups.",
+    "title": "Facet-First Evaluation Beats Judge-Only Scoring",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_006_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_006",
+    "source_type": "study",
+    "text": "Both systems scored the same research briefs, but only the hybrid scorer had access to hidden facet checklists and forbidden claims.",
+    "title": "Facet-First Evaluation Beats Judge-Only Scoring",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_006_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_006",
+    "source_type": "study",
+    "text": "Facet-first scoring reduced variance and produced more defensible decisions on short evidence-backed briefs.",
+    "title": "Facet-First Evaluation Beats Judge-Only Scoring",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_006_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_006",
+    "source_type": "study",
+    "text": "Judge-only scoring drifted on borderline paraphrases and often rewarded style over factual coverage.",
+    "title": "Facet-First Evaluation Beats Judge-Only Scoring",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_006_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_006",
+    "source_type": "study",
+    "text": "Without hidden contradictions, the judge occasionally passed answers that blended correct facts with subtle but important errors.",
+    "title": "Facet-First Evaluation Beats Judge-Only Scoring",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_006_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_006",
+    "source_type": "study",
+    "text": "Make hidden facets and contradiction checks primary, then use a fixed judge only as a narrow synthesis layer.",
+    "title": "Facet-First Evaluation Beats Judge-Only Scoring",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_007_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_007",
+    "source_type": "report",
+    "text": "This report analyzed what happens when the corpus includes both supporting and limiting evidence for the same claim.",
+    "title": "Contradiction Handling Through Evidence Buckets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_007_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_007",
+    "source_type": "report",
+    "text": "The system logged supportive evidence, limiting evidence, and unresolved conflicts in separate evidence buckets.",
+    "title": "Contradiction Handling Through Evidence Buckets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_007_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_007",
+    "source_type": "report",
+    "text": "Answers were more trustworthy when the final brief named the strongest support and the main limitation instead of forcing a single-sided conclusion.",
+    "title": "Contradiction Handling Through Evidence Buckets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_007_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_007",
+    "source_type": "report",
+    "text": "Contradiction buckets helped the system avoid citing a limitation chunk as if it were supportive evidence.",
+    "title": "Contradiction Handling Through Evidence Buckets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_007_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_007",
+    "source_type": "report",
+    "text": "Naive majority voting collapsed nuance and erased important caveats from minority but credible sources.",
+    "title": "Contradiction Handling Through Evidence Buckets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_007_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_007",
+    "source_type": "report",
+    "text": "Track support and limitation evidence separately, then surface both when claims remain contested.",
+    "title": "Contradiction Handling Through Evidence Buckets",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_008_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_008",
+    "source_type": "study",
+    "text": "The study tested whether smaller or larger chunks worked better for brief generation and citation checks.",
+    "title": "Chunk Granularity And Citation Reliability",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_008_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_008",
+    "source_type": "study",
+    "text": "Chunk sizes ranged from single paragraphs up to multi-section windows with overlapping stride.",
+    "title": "Chunk Granularity And Citation Reliability",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_008_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_008",
+    "source_type": "study",
+    "text": "Mid-sized chunks preserved enough local context for citation checks without burying support under unrelated text.",
+    "title": "Chunk Granularity And Citation Reliability",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_008_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_008",
+    "source_type": "study",
+    "text": "Very large chunks improved recall but weakened citation precision because support and caveats were mixed together.",
+    "title": "Chunk Granularity And Citation Reliability",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_008_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_008",
+    "source_type": "study",
+    "text": "Single-sentence chunks fragmented methodology descriptions and forced too many retrieval calls.",
+    "title": "Chunk Granularity And Citation Reliability",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_008_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_008",
+    "source_type": "study",
+    "text": "Use paragraph-scale chunks with stable section metadata when citation validity matters.",
+    "title": "Chunk Granularity And Citation Reliability",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_009_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_009",
+    "source_type": "study",
+    "text": "This analysis asked whether better briefs cited more chunks or simply more diverse sources.",
+    "title": "Source Diversity As A Coverage Signal",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_009_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_009",
+    "source_type": "study",
+    "text": "Coverage was decomposed into source diversity, evidence type diversity, and repeated support from the same source.",
+    "title": "Source Diversity As A Coverage Signal",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_009_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_009",
+    "source_type": "study",
+    "text": "Source diversity predicted robust answers better than raw chunk count because multiple sources reduced single-document overfitting.",
+    "title": "Source Diversity As A Coverage Signal",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_009_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_009",
+    "source_type": "study",
+    "text": "The best systems usually cited at least one method source and one limitation or tradeoff source.",
+    "title": "Source Diversity As A Coverage Signal",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_009_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_009",
+    "source_type": "study",
+    "text": "Repeatedly citing the same source looked thorough but left important failure evidence undiscovered.",
+    "title": "Source Diversity As A Coverage Signal",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_009_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_009",
+    "source_type": "study",
+    "text": "Track source diversity explicitly and prefer citations that span method, result, and limitation evidence.",
+    "title": "Source Diversity As A Coverage Signal",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_010_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_010",
+    "source_type": "study",
+    "text": "The benchmark compared blind retry loops against a critique step that diagnosed why the previous brief missed evidence.",
+    "title": "Critique Loops Beat Blind Retries",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_010_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_010",
+    "source_type": "study",
+    "text": "After each draft, the critique step asked which facet was missing, which citation was weak, and what retrieval gap remained.",
+    "title": "Critique Loops Beat Blind Retries",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_010_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_010",
+    "source_type": "study",
+    "text": "Critique-guided retries improved final score because each new round targeted a missing facet or unsupported claim.",
+    "title": "Critique Loops Beat Blind Retries",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_010_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_010",
+    "source_type": "study",
+    "text": "Blind retries consumed comparable tokens but mostly paraphrased the same weak evidence.",
+    "title": "Critique Loops Beat Blind Retries",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_010_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_010",
+    "source_type": "study",
+    "text": "Retry policies without explicit failure diagnosis repeated the first retrieval query and citation set.",
+    "title": "Critique Loops Beat Blind Retries",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_010_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_010",
+    "source_type": "study",
+    "text": "Use critique to name the missing facet or weak citation before starting another retrieval round.",
+    "title": "Critique Loops Beat Blind Retries",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_011_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_011",
+    "source_type": "study",
+    "text": "This study examined when query expansion helps or hurts in a benchmark with hard call and token budgets.",
+    "title": "Budget-Aware Query Expansion",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_011_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_011",
+    "source_type": "study",
+    "text": "The strongest strategy expanded only one or two key terms with synonyms tied to task type and then reranked aggressively.",
+    "title": "Budget-Aware Query Expansion",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_011_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_011",
+    "source_type": "study",
+    "text": "Limited query expansion improved recall on methodology and comparison tasks without breaking the budget.",
+    "title": "Budget-Aware Query Expansion",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_011_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_011",
+    "source_type": "study",
+    "text": "Unbounded synonym expansion inflated candidate pools and pushed the system into budget penalties.",
+    "title": "Budget-Aware Query Expansion",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_011_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_011",
+    "source_type": "study",
+    "text": "Expansion on every noun phrase created many near-duplicate results and left no room for verification calls.",
+    "title": "Budget-Aware Query Expansion",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_011_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_011",
+    "source_type": "study",
+    "text": "Expand only the high-value terms, keep the pool small, and preserve budget for reranking and verification.",
+    "title": "Budget-Aware Query Expansion",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_012_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_012",
+    "source_type": "study",
+    "text": "A reranking ablation tested whether chunk metadata about evidence type improved brief quality.",
+    "title": "Evidence-Type Tags Help Rerankers",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_012_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_012",
+    "source_type": "study",
+    "text": "Chunks carried section tags such as method, result, limitation, and recommendation during reranking.",
+    "title": "Evidence-Type Tags Help Rerankers",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_012_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_012",
+    "source_type": "study",
+    "text": "Evidence-type tags helped the reranker surface one result chunk and one limitation chunk for balanced answers.",
+    "title": "Evidence-Type Tags Help Rerankers",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_012_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_012",
+    "source_type": "study",
+    "text": "Metadata-aware reranking outperformed text-only ranking on tasks that required tradeoff discussion.",
+    "title": "Evidence-Type Tags Help Rerankers",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_012_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_012",
+    "source_type": "study",
+    "text": "Text-only reranking over-selected result sections and skipped the limitation evidence needed for strong coverage.",
+    "title": "Evidence-Type Tags Help Rerankers",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_012_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_012",
+    "source_type": "study",
+    "text": "Keep section and evidence-type metadata in the index and let reranking use it explicitly.",
+    "title": "Evidence-Type Tags Help Rerankers",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_013_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_013",
+    "source_type": "report",
+    "text": "This report focused on which run artifacts actually helped teams improve their scaffold between evaluations.",
+    "title": "Logging Failure Modes For Faster Iteration",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_013_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_013",
+    "source_type": "report",
+    "text": "Runs emitted raw outputs, per-task score breakdowns, query traces, and explicit failure labels.",
+    "title": "Logging Failure Modes For Faster Iteration",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_013_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_013",
+    "source_type": "report",
+    "text": "Teams improved faster when they could see whether a miss came from retrieval, citation validity, or synthesis coverage.",
+    "title": "Logging Failure Modes For Faster Iteration",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_013_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_013",
+    "source_type": "report",
+    "text": "Per-task score breakdowns made it obvious whether the next change should target evidence coverage or unsupported claims.",
+    "title": "Logging Failure Modes For Faster Iteration",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_013_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_013",
+    "source_type": "report",
+    "text": "Single scalar scores without artifacts encouraged random tweaking because users could not see why a run failed.",
+    "title": "Logging Failure Modes For Faster Iteration",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_013_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_013",
+    "source_type": "report",
+    "text": "Store raw outputs and component scores for every task so contestants can debug specific failure modes.",
+    "title": "Logging Failure Modes For Faster Iteration",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_014_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_014",
+    "source_type": "study",
+    "text": "A controlled benchmark asked systems to choose the best method under explicit latency, cost, or evidence constraints.",
+    "title": "Constraint-Aware Selection Beats Max-Accuracy Drafting",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_014_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_014",
+    "source_type": "study",
+    "text": "Methods with the highest unconstrained accuracy were not always optimal once runtime and tool limits were applied.",
+    "title": "Constraint-Aware Selection Beats Max-Accuracy Drafting",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_014_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_014",
+    "source_type": "study",
+    "text": "Constraint-aware selection worked best when the answer explicitly named the winning method and the reason it fit the constraint.",
+    "title": "Constraint-Aware Selection Beats Max-Accuracy Drafting",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_014_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_014",
+    "source_type": "study",
+    "text": "High-accuracy but slow methods often lost under strict wall-clock or tool-call caps.",
+    "title": "Constraint-Aware Selection Beats Max-Accuracy Drafting",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_014_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_014",
+    "source_type": "study",
+    "text": "Drafts that ignored the stated constraint were judged wrong even when their unconstrained recommendation sounded strong.",
+    "title": "Constraint-Aware Selection Beats Max-Accuracy Drafting",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_014_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_014",
+    "source_type": "study",
+    "text": "For selection tasks, align the answer to the named constraint before optimizing for absolute accuracy.",
+    "title": "Constraint-Aware Selection Beats Max-Accuracy Drafting",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_015_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_015",
+    "source_type": "spec",
+    "text": "The evaluation design grouped hidden evidence into method, support, limitation, and recommendation buckets.",
+    "title": "Evidence Groups Make Multi-Hop Tasks Defensible",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_015_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_015",
+    "source_type": "spec",
+    "text": "A task only earned full coverage when its citations spanned all required evidence groups.",
+    "title": "Evidence Groups Make Multi-Hop Tasks Defensible",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_015_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_015",
+    "source_type": "spec",
+    "text": "Evidence groups stopped shallow systems from winning with one strong quote that ignored the rest of the verification path.",
+    "title": "Evidence Groups Make Multi-Hop Tasks Defensible",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_015_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_015",
+    "source_type": "spec",
+    "text": "Group-aware scoring especially improved multi-hop comparison tasks where method and limitation evidence lived in different chunks.",
+    "title": "Evidence Groups Make Multi-Hop Tasks Defensible",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_015_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_015",
+    "source_type": "spec",
+    "text": "Without evidence groups, answers with narrow but eloquent support scored too well.",
+    "title": "Evidence Groups Make Multi-Hop Tasks Defensible",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_015_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_015",
+    "source_type": "spec",
+    "text": "Define hidden evidence groups per task and require coverage across them, not just one valid citation.",
+    "title": "Evidence Groups Make Multi-Hop Tasks Defensible",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_016_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_016",
+    "source_type": "study",
+    "text": "This retrieval study emphasized that titles, sections, and source metadata often carry the exact discriminators a benchmark needs.",
+    "title": "Metadata-First Retrieval For Frozen Corpora",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_016_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_016",
+    "source_type": "study",
+    "text": "The system indexed source title tokens, section labels, and year metadata alongside chunk text.",
+    "title": "Metadata-First Retrieval For Frozen Corpora",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_016_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_016",
+    "source_type": "study",
+    "text": "Metadata-first retrieval rescued tasks that asked for methodology or limitation evidence because those cues were often in headers.",
+    "title": "Metadata-First Retrieval For Frozen Corpora",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_016_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_016",
+    "source_type": "study",
+    "text": "Plain text search missed important chunks when the body used pronouns but the header named the relevant method directly.",
+    "title": "Metadata-First Retrieval For Frozen Corpora",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_016_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_016",
+    "source_type": "study",
+    "text": "Ignoring metadata made many retrieval misses look mysterious even though the answer cue was sitting in the title field.",
+    "title": "Metadata-First Retrieval For Frozen Corpora",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_016_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_016",
+    "source_type": "study",
+    "text": "Index titles and sections as first-class search features rather than treating metadata as decoration.",
+    "title": "Metadata-First Retrieval For Frozen Corpora",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_017_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_017",
+    "source_type": "report",
+    "text": "A note-taking ablation asked whether lightweight note tools help under small budgets.",
+    "title": "Short Notes Help Verification Calls",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_017_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_017",
+    "source_type": "report",
+    "text": "The tool only allowed concise notes that recorded which claim a chunk supported and which gap still remained.",
+    "title": "Short Notes Help Verification Calls",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_017_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_017",
+    "source_type": "report",
+    "text": "Short notes improved verification because the system could remember why a citation was chosen without rereading every chunk.",
+    "title": "Short Notes Help Verification Calls",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_017_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_017",
+    "source_type": "report",
+    "text": "The gain was strongest when notes were claim-linked instead of generic summaries.",
+    "title": "Short Notes Help Verification Calls",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_017_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_017",
+    "source_type": "report",
+    "text": "Verbose note dumps consumed tokens and duplicated chunk text instead of sharpening the next action.",
+    "title": "Short Notes Help Verification Calls",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_017_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_017",
+    "source_type": "report",
+    "text": "Use notes sparingly to link claims, citations, and remaining gaps rather than to restate the corpus.",
+    "title": "Short Notes Help Verification Calls",
+    "year": 2024
+  },
+  {
+    "chunk_id": "src_018_c01",
+    "position": 1,
+    "section": "overview",
+    "source_id": "src_018",
+    "source_type": "study",
+    "text": "The benchmark compared short evidence-backed briefs against long reasoning traces for the same tasks.",
+    "title": "Concise Synthesis Outperforms Long Reasoning Dumps",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_018_c02",
+    "position": 2,
+    "section": "setup",
+    "source_id": "src_018",
+    "source_type": "study",
+    "text": "Both variants had access to the same retrieval stack, but one had to answer in a compact structured brief.",
+    "title": "Concise Synthesis Outperforms Long Reasoning Dumps",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_018_c03",
+    "position": 3,
+    "section": "finding",
+    "source_id": "src_018",
+    "source_type": "study",
+    "text": "Concise briefs scored better because they were easier to validate against hidden facets and citation rules.",
+    "title": "Concise Synthesis Outperforms Long Reasoning Dumps",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_018_c04",
+    "position": 4,
+    "section": "finding",
+    "source_id": "src_018",
+    "source_type": "study",
+    "text": "Long reasoning dumps increased the chance of unsupported side claims and contradiction penalties.",
+    "title": "Concise Synthesis Outperforms Long Reasoning Dumps",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_018_c05",
+    "position": 5,
+    "section": "failure",
+    "source_id": "src_018",
+    "source_type": "study",
+    "text": "Verbose answers often wandered beyond the retrieved evidence and mixed speculation with supported findings.",
+    "title": "Concise Synthesis Outperforms Long Reasoning Dumps",
+    "year": 2025
+  },
+  {
+    "chunk_id": "src_018_c06",
+    "position": 6,
+    "section": "recommendation",
+    "source_id": "src_018",
+    "source_type": "study",
+    "text": "Require short structured briefs with citations, and avoid long chain-of-thought style outputs.",
+    "title": "Concise Synthesis Outperforms Long Reasoning Dumps",
+    "year": 2025
+  }
+]

@@ -1,0 +1,6 @@
+Plan a short frozen-corpus research pass.
+
+Goals:
+- identify the smallest set of chunks that can answer the question
+- prefer distinct sources over repeated chunks from one source
+- preserve budget for reranking and verification

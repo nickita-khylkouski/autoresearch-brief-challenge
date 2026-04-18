@@ -1,0 +1,110 @@
+[
+  {
+    "source_id": "src_001",
+    "source_type": "study",
+    "title": "Hybrid Retrieval Under Tight Tool Budgets",
+    "year": 2024
+  },
+  {
+    "source_id": "src_002",
+    "source_type": "study",
+    "title": "Query Decomposition For Comparison Tasks",
+    "year": 2025
+  },
+  {
+    "source_id": "src_003",
+    "source_type": "report",
+    "title": "Memory Compression Beats Full Transcript Carryover",
+    "year": 2025
+  },
+  {
+    "source_id": "src_004",
+    "source_type": "study",
+    "title": "Marginal Gain Stop Rules For Research Loops",
+    "year": 2024
+  },
+  {
+    "source_id": "src_005",
+    "source_type": "spec",
+    "title": "Strict Citation Checks For Frozen Corpus Benchmarks",
+    "year": 2025
+  },
+  {
+    "source_id": "src_006",
+    "source_type": "study",
+    "title": "Facet-First Evaluation Beats Judge-Only Scoring",
+    "year": 2025
+  },
+  {
+    "source_id": "src_007",
+    "source_type": "report",
+    "title": "Contradiction Handling Through Evidence Buckets",
+    "year": 2024
+  },
+  {
+    "source_id": "src_008",
+    "source_type": "study",
+    "title": "Chunk Granularity And Citation Reliability",
+    "year": 2025
+  },
+  {
+    "source_id": "src_009",
+    "source_type": "study",
+    "title": "Source Diversity As A Coverage Signal",
+    "year": 2024
+  },
+  {
+    "source_id": "src_010",
+    "source_type": "study",
+    "title": "Critique Loops Beat Blind Retries",
+    "year": 2025
+  },
+  {
+    "source_id": "src_011",
+    "source_type": "study",
+    "title": "Budget-Aware Query Expansion",
+    "year": 2024
+  },
+  {
+    "source_id": "src_012",
+    "source_type": "study",
+    "title": "Evidence-Type Tags Help Rerankers",
+    "year": 2025
+  },
+  {
+    "source_id": "src_013",
+    "source_type": "report",
+    "title": "Logging Failure Modes For Faster Iteration",
+    "year": 2024
+  },
+  {
+    "source_id": "src_014",
+    "source_type": "study",
+    "title": "Constraint-Aware Selection Beats Max-Accuracy Drafting",
+    "year": 2025
+  },
+  {
+    "source_id": "src_015",
+    "source_type": "spec",
+    "title": "Evidence Groups Make Multi-Hop Tasks Defensible",
+    "year": 2025
+  },
+  {
+    "source_id": "src_016",
+    "source_type": "study",
+    "title": "Metadata-First Retrieval For Frozen Corpora",
+    "year": 2024
+  },
+  {
+    "source_id": "src_017",
+    "source_type": "report",
+    "title": "Short Notes Help Verification Calls",
+    "year": 2024
+  },
+  {
+    "source_id": "src_018",
+    "source_type": "study",
+    "title": "Concise Synthesis Outperforms Long Reasoning Dumps",
+    "year": 2025
+  }
+]

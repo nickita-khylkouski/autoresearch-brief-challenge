@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AutoResearch Brief Challenge Task",
+  "type": "object",
+  "required": [
+    "task_id",
+    "question",
+    "corpus_pack_id",
+    "task_type",
+    "budget",
+    "expected_output_schema"
+  ],
+  "properties": {
+    "task_id": { "type": "string" },
+    "question": { "type": "string" },
+    "corpus_pack_id": { "type": "string" },
+    "task_type": { "type": "string" },
+    "budget": {
+      "type": "object",
+      "required": [
+        "max_time_seconds",
+        "max_tool_calls",
+        "max_search_results",
+        "max_tokens",
+        "max_citations"
+      ],
+      "properties": {
+        "max_time_seconds": { "type": "number" },
+        "max_tool_calls": { "type": "integer" },
+        "max_search_results": { "type": "integer" },
+        "max_tokens": { "type": "integer" },
+        "max_citations": { "type": "integer" }
+      }
+    },
+    "expected_output_schema": { "type": "string" }
+  }
+}
