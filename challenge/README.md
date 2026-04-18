@@ -17,6 +17,7 @@ Core properties:
 - hard task budgets
 - network-blocked evaluation
 - bundle validation before submission
+- held-out leaderboard splits kept off-repo
 
 Main modules:
 

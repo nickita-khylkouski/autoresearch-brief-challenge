@@ -1,18 +1,12 @@
 # Tournament Format
 
-This challenge is intentionally modeled after the best parts of current public benchmark tournaments:
+This challenge is intentionally modeled after the best parts of current public benchmark repositories such as [openai/mle-bench](https://github.com/openai/mle-bench) and [SWE-bench/SWE-bench](https://github.com/SWE-bench/SWE-bench):
 
 - fixed dataset plus fixed evaluation scripts
 - baseline starter in the repo
 - local visible development split
 - maintainers-run public and private leaderboard evaluation
 - submission bundles that include code, prompts, score artifacts, and a short write-up
-
-Closest inspirations:
-
-- OpenAI Parameter Golf: baseline repo, fixed evaluator, PR-style leaderboard updates
-- OpenAI MLE-bench: visible prep and grading scripts, split-aware benchmark workflow
-- SWE-rebench: public leaderboard discipline, explicit methodology, evolving benchmark culture
 
 ## Public Repo vs Official Evaluation
 
@@ -31,6 +25,8 @@ Official maintainers keep these off-repo:
 
 - `public_leaderboard`: 20 tasks
 - `private_leaderboard`: 40 tasks
+
+The public repo deliberately keeps only the visible `dev` scoring targets. That allows real local iteration without leaking the held-out benchmark.
 
 ## Submission Rules
 
@@ -95,3 +91,5 @@ This is not just a prompt demo. It has the same basic mechanics as a serious pub
 - visible local dev split plus hidden leaderboard evaluation
 - bundle validation
 - leaderboard-ready artifacts
+
+The main thing the public repo optimizes for is competitor usability: clone it, run it locally, inspect one task, improve a submission, and hand maintainers a bundle that can be scored consistently on held-out data.

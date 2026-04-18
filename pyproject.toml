@@ -12,6 +12,19 @@ license = { text = "MIT" }
 authors = [
   { name = "Nickita Khylkouski" }
 ]
+keywords = ["benchmark", "retrieval", "evaluation", "agents", "research"]
+classifiers = [
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Testing"
+]
 
 [tool.setuptools]
 packages = ["challenge"]
+
+[project.urls]
+Homepage = "https://github.com/nickita-khylkouski/autoresearch-brief-challenge"
+Repository = "https://github.com/nickita-khylkouski/autoresearch-brief-challenge"
+Issues = "https://github.com/nickita-khylkouski/autoresearch-brief-challenge/issues"

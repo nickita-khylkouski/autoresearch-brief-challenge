@@ -1,22 +1,58 @@
 # AutoResearch Brief Challenge
 
-`AutoResearch Brief Challenge` is a public starter repo for a scaffold-optimization benchmark on a frozen corpus.
+[![CI](https://github.com/nickita-khylkouski/autoresearch-brief-challenge/actions/workflows/ci.yml/badge.svg)](https://github.com/nickita-khylkouski/autoresearch-brief-challenge/actions/workflows/ci.yml)
 
-This repo is meant to be cloned by competitors. It gives you a real local dev loop, a working baseline, a submission validator, and a held-out-style tournament workflow without exposing the official leaderboard grading data.
+`AutoResearch Brief Challenge` is a local-first benchmark for improving an autoresearch scaffold on a frozen corpus.
 
-## What You Can Do With This Repo
+This is a real benchmark starter kit, not a prompt demo. It gives competitors a visible development split, a fixed evaluator, a working baseline, reproducible local scoring, and a held-out tournament workflow without publishing the official leaderboard grading data.
 
-- inspect the benchmark format
-- run the visible `dev` split locally
-- validate a submission bundle
-- improve the scaffold instead of changing the model
-- submit a bundle for maintainer-run leaderboard evaluation
+## Why This Repo Exists
+
+The challenge is designed around a simple idea: reward better research process, not model swapping.
+
+You are meant to improve:
+
+- retrieval strategy
+- query expansion
+- reranking
+- memory policy
+- critique and verification logic
+- synthesis discipline
+
+You are not meant to change:
+
+- the frozen corpus
+- the evaluator
+- the official leaderboard grading logic
+
+## Why It Is Benchmark-Shaped
+
+The workflow here follows the pattern used by serious public benchmark repos such as [openai/mle-bench](https://github.com/openai/mle-bench) and [SWE-bench/SWE-bench](https://github.com/SWE-bench/SWE-bench):
+
+- a public starter repository
+- a visible local development loop
+- a fixed evaluator
+- baseline implementations
+- held-out leaderboard evaluation
+
+That matters because competitors can iterate locally without making the official ranking gameable.
 
 ## Quickstart
 
 Requirements:
 
 - Python 3.11+
+
+Fast path:
+
+```bash
+make seed
+make validate-baseline
+make eval-dev
+make test
+```
+
+Equivalent direct commands:
 
 ```bash
 python3 scripts/generate_autoresearch_challenge_seed.py
@@ -26,37 +62,106 @@ python3 inspect_task.py --task-id dev_001
 python3 -m unittest discover -s tests -p 'test_*.py' -v
 ```
 
-## Core Idea
+Current baseline on the public `dev` split:
 
-This challenge rewards better research-process design, not model swapping.
+- `final_score`: `0.613333`
+- `task_count`: `20`
 
-You are meant to improve:
+## What You Can Do In This Repo
 
-- retrieval strategy
-- query expansion
-- reranking
-- memory policy
-- critique / verification logic
-- synthesis discipline
+- inspect the benchmark format
+- inspect a real visible task with `inspect_task.py`
+- run the visible `dev` split locally
+- validate a submission bundle before shipping it
+- compare runs with leaderboard-style summaries
+- improve the scaffold without touching benchmark internals
 
-You are not meant to change:
+## What A Task Looks Like
 
-- the frozen corpus
-- the evaluator
-- the official leaderboard grading logic
+Each task specifies:
+
+- a question
+- a task type
+- a corpus pack
+- a fixed output schema
+- hard budgets for time, tool calls, tokens, search results, and citations
+
+For example:
+
+```bash
+python3 inspect_task.py --task-id dev_001
+```
+
+That task asks:
+
+> Which retrieval stack is strongest for multi-hop frozen-corpus questions when the system only gets ten tool calls?
+
+And it exposes explicit budgets such as:
+
+- `max_tool_calls = 10`
+- `max_time_seconds = 15`
+- `max_tokens = 2200`
+
+## Scoring Model
+
+Each task score combines:
+
+- answer correctness against hidden facets
+- citation validity against fixed support chunk sets
+- evidence coverage across required evidence groups
+- budget penalties when a scaffold exceeds limits
+
+The evaluator writes run artifacts so you can debug why a score changed:
+
+- `summary.json`
+- `scores.json`
+- `raw_outputs.json`
+
+## Public Repo vs Official Tournament
+
+This public GitHub repo includes only the visible `dev` split for local iteration.
+
+The official tournament shape is:
+
+- `dev`: 20 visible tasks
+- `public_leaderboard`: 20 held-out tasks, maintainer-evaluated
+- `private_leaderboard`: 40 held-out tasks, maintainer-evaluated
+
+That split is deliberate. Public code should support meaningful local iteration without leaking the real leaderboard targets.
+
+The public repo therefore contains:
+
+- `tasks/dev.json`
+- `tasks/_private/dev_hidden.json`
+
+The `dev_hidden` file is included because `dev` is the visible split and must be fully scoreable locally. Held-out leaderboard grading data is not published in this repository.
+
+See:
+
+- [TOURNAMENT.md](./TOURNAMENT.md)
+- [tasks/leaderboard_manifest.json](./tasks/leaderboard_manifest.json)
+
+## Submission Workflow
+
+1. Copy `submissions/template` to a new submission directory.
+2. Edit prompt files and, if needed, `submission_impl.py`.
+3. Run `python3 validate_submission.py --submission path/to/submission`.
+4. Run `python3 evaluate.py --split dev --submission path/to/submission`.
+5. Inspect the run artifact in `runs/...`.
+6. Submit the bundle, local score artifact, and `writeup.md` to maintainers for held-out evaluation.
 
 ## Repo Layout
 
 - `challenge/`: evaluator, corpus loader, scoring, sandboxing, validation
 - `corpora/frozen_autoresearch_v1/`: frozen local corpus pack
 - `tasks/dev.json`: visible development split
-- `tasks/_private/dev_hidden.json`: visible dev grading data
+- `tasks/_private/dev_hidden.json`: visible grading targets for `dev`
 - `submissions/baseline/`: working reference submission
-- `submissions/template/`: starter bundle for competitors
+- `submissions/template/`: competitor starter bundle
 - `tests/`: standard-library test suite
-- `TOURNAMENT.md`: tournament rules and held-out split policy
+- `TOURNAMENT.md`: public-vs-held-out tournament rules
 
-## Commands
+## Useful Commands
 
 ```bash
 python3 validate_submission.py --submission submissions/template
@@ -67,46 +172,22 @@ python3 inspect_task.py --task-id dev_001
 python3 inspect_run.py --run runs/<run-id>
 ```
 
-## Public Repo vs Official Tournament
-
-This public GitHub repo includes only the visible `dev` split.
-
-The official tournament shape is:
-
-- `dev`: 20 visible tasks
-- `public_leaderboard`: 20 held-out tasks, maintainer-evaluated
-- `private_leaderboard`: 40 held-out tasks, maintainer-evaluated
-
-That is deliberate. The public repo is for local iteration. The official rankings come from hidden evaluation.
-
-See:
-
-- [TOURNAMENT.md](./TOURNAMENT.md)
-- [tasks/leaderboard_manifest.json](./tasks/leaderboard_manifest.json)
-
-## Submission Workflow
-
-1. Copy `submissions/template` to a new submission directory.
-2. Edit prompts and optional `submission_impl.py`.
-3. Run `python3 validate_submission.py --submission path/to/submission`.
-4. Run `python3 evaluate.py --split dev --submission path/to/submission`.
-5. Include your local run artifact and `writeup.md` when submitting to maintainers.
-
 ## Integrity Guarantees
 
-- strict JSON outputs
 - deterministic local scoring
+- strict JSON outputs
 - network access blocked during evaluation
 - hard task timeouts
 - fixed support-set citation checks
+- frozen local corpora
 - reusable baseline for comparison
 
-## Benchmark Lineage
+## Design Notes
 
-This starter is shaped like the best public optimization-benchmark repos:
+This repo intentionally stays small and easy to run:
 
-- visible local dev loop
-- fixed evaluator
-- baseline starter
-- hidden leaderboard grading
-- submission bundle discipline
+- no external services are required for the public starter
+- the core loop is standard-library friendly
+- CI reruns seed generation, validation, evaluation, and tests on every push
+
+That makes it easy for other researchers to clone, understand, and modify without reverse-engineering a large framework first.
