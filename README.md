@@ -172,6 +172,58 @@ python3 inspect_task.py --task-id dev_001
 python3 inspect_run.py --run runs/<run-id>
 ```
 
+## MiniMax AutoResearch Chess Demo
+
+This repo also includes a local-first TechEx demo for explaining AutoResearch with a chess Elo loop. MiniMax proposes small code changes to a constrained chess bot, the backend evaluates the candidate with fixed local matches, and only estimated Elo improvements are kept.
+
+The demo loop is:
+
+```text
+goal + constrained editable files + objective eval + MiniMax iterations = compounding improvement
+```
+
+Chess demo quickstart:
+
+```bash
+cp .env.example .env
+# add MINIMAX_API_KEY to .env for live-demo, or use the mock/replay paths below
+make setup
+make eval
+make stage-demo
+make replay-best
+make chess-test
+```
+
+Nickita's local development machine can run live MiniMax with:
+
+```bash
+MINIMAX_ENV_FILE=/Users/nickita/.claude-wafer/minimax.env make live-demo
+```
+
+Demo commands:
+
+```bash
+make setup       # create .venv and install chess demo dependencies
+make eval        # evaluate the weak baseline chess bot
+make stage-demo  # stage-safe mock MiniMax loop
+make live-demo   # one live MiniMax-backed stage iteration
+make replay-best # replay captured successful run without API/network
+make chess-test  # run chess demo pytest suite
+```
+
+The captured replay in `artifacts/demo_replay/` shows estimated Elo rising from `629.6` to `1163.4` to `1276.1`. The score is always **estimated Elo**, not official chess Elo.
+
+MiniMax may edit only:
+
+- `bot/evaluate.py`
+- `bot/search.py`
+- `bot/move_ordering.py`
+- `bot/config.py`
+
+The evaluator, benchmark opponents, tests, artifacts, env files, and dependency files are guarded. Candidate evals run in a timed subprocess and are rejected on timeout, illegal moves, forbidden edits, crashes, or insufficient Elo improvement.
+
+See [MINIMAX_AUTORESEARCH_CHESS_PRD.md](./MINIMAX_AUTORESEARCH_CHESS_PRD.md) for the full product spec.
+
 ## Integrity Guarantees
 
 - deterministic local scoring

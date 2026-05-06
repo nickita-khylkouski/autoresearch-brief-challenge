@@ -1,0 +1,8 @@
+{
+  "iteration": 3,
+  "accepted": false,
+  "reasons": [
+    "estimated_elo_did_not_improve_enough"
+  ],
+  "improvement": 0.0
+}

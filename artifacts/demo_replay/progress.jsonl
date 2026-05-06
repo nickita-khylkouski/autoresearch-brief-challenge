@@ -1,0 +1,4 @@
+{"event": "baseline", "iteration": 0, "best_elo": 629.6, "candidate_elo": 629.6, "decision": "baseline", "label": "estimated Elo"}
+{"event": "iteration", "iteration": 1, "accepted": true, "best_elo": 1163.4, "candidate_elo": 1163.4, "decision": "accepted", "reasons": [], "label": "estimated Elo"}
+{"event": "iteration", "iteration": 2, "accepted": true, "best_elo": 1276.1, "candidate_elo": 1276.1, "decision": "accepted", "reasons": [], "label": "estimated Elo"}
+{"event": "iteration", "iteration": 3, "accepted": false, "best_elo": 1276.1, "candidate_elo": 1276.1, "decision": "rejected", "reasons": ["estimated_elo_did_not_improve_enough"], "label": "estimated Elo"}

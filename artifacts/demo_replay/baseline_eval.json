@@ -1,0 +1,116 @@
+{
+  "estimated_elo": 629.6,
+  "opponents": [
+    {
+      "opponent": "random",
+      "anchor_elo": 250,
+      "wins": 1,
+      "draws": 3,
+      "losses": 0,
+      "score_rate": 0.625
+    },
+    {
+      "opponent": "greedy",
+      "anchor_elo": 650,
+      "wins": 1,
+      "draws": 2,
+      "losses": 1,
+      "score_rate": 0.5
+    },
+    {
+      "opponent": "baseline",
+      "anchor_elo": 900,
+      "wins": 0,
+      "draws": 4,
+      "losses": 0,
+      "score_rate": 0.5
+    }
+  ],
+  "games": [
+    {
+      "opponent": "random",
+      "bot_color": "white",
+      "score": 0.5,
+      "seed": 215636
+    },
+    {
+      "opponent": "random",
+      "bot_color": "black",
+      "score": 0.5,
+      "seed": 923709
+    },
+    {
+      "opponent": "random",
+      "bot_color": "white",
+      "score": 1.0,
+      "seed": 417415
+    },
+    {
+      "opponent": "random",
+      "bot_color": "black",
+      "score": 0.5,
+      "seed": 908811
+    },
+    {
+      "opponent": "greedy",
+      "bot_color": "white",
+      "score": 1.0,
+      "seed": 947083
+    },
+    {
+      "opponent": "greedy",
+      "bot_color": "black",
+      "score": 0.5,
+      "seed": 915521
+    },
+    {
+      "opponent": "greedy",
+      "bot_color": "white",
+      "score": 0.0,
+      "seed": 829132
+    },
+    {
+      "opponent": "greedy",
+      "bot_color": "black",
+      "score": 0.5,
+      "seed": 416341
+    },
+    {
+      "opponent": "baseline",
+      "bot_color": "white",
+      "score": 0.5,
+      "seed": 480538
+    },
+    {
+      "opponent": "baseline",
+      "bot_color": "black",
+      "score": 0.5,
+      "seed": 380821
+    },
+    {
+      "opponent": "baseline",
+      "bot_color": "white",
+      "score": 0.5,
+      "seed": 928067
+    },
+    {
+      "opponent": "baseline",
+      "bot_color": "black",
+      "score": 0.5,
+      "seed": 859942
+    }
+  ],
+  "config": {
+    "games_per_opponent": 4,
+    "max_plies": 90,
+    "candidate_depth_limit": 3,
+    "opponent_names": [
+      "random",
+      "greedy",
+      "baseline"
+    ]
+  },
+  "label": "estimated Elo",
+  "ok": true,
+  "errors": []
+}
