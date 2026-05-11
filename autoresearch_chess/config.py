@@ -26,6 +26,8 @@ class LoopConfig:
     mock_minimax: bool = False
     run_id: str | None = None
     eval_config: EvalConfig = EvalConfig()
+    use_tool_calling: bool = True
+    agent_max_rounds: int = 6
 
 
 STAGE_EVAL_CONFIG = EvalConfig(games_per_opponent=2, max_plies=90)
@@ -34,4 +36,5 @@ STAGE_LOOP_CONFIG = LoopConfig(
     accept_threshold_elo=1.0,
     mock_minimax=True,
     eval_config=STAGE_EVAL_CONFIG,
+    use_tool_calling=True,
 )

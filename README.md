@@ -174,7 +174,9 @@ python3 inspect_run.py --run runs/<run-id>
 
 ## MiniMax AutoResearch Chess Demo
 
-This repo also includes a local-first TechEx demo for explaining AutoResearch with a chess Elo loop. MiniMax proposes small code changes to a constrained chess bot, the backend evaluates the candidate with fixed local matches, and only estimated Elo improvements are kept.
+This repo also includes a local-first TechEx demo for explaining AutoResearch with a chess Elo loop. An OpenClaw-style tool-calling agent built on MiniMax inspects the editable bot files, considers recent history, and proposes small unified diffs. The backend evaluates each candidate with fixed local matches, and only estimated Elo improvements are kept.
+
+The agent's full tool-call trace is persisted per iteration so attendees can see exactly what the model asked for and how it reasoned. See [`docs/openclaw_mapping.md`](./docs/openclaw_mapping.md) for how the agent modules map onto OpenClaw's gateway / context / react / tool-layer architecture.
 
 The demo loop is:
 
