@@ -6,6 +6,15 @@ The chess demo uses an OpenClaw-compatible agent architecture without depending 
 
 OpenClaw is a self-hosted gateway designed for messaging-platform UIs (WhatsApp, Slack, Discord, etc.). Running it would add a stateful service to the critical path of a 60-minute on-stage demo, which conflicts with `MINIMAX_AUTORESEARCH_CHESS_PRD.md` §4.2 ("complete a short demo iteration in under 2 minutes in stage mode"). We adopt OpenClaw's **architectural seams and tool-schema conventions** so attendees see the right shape, and document the Gateway deployment as the natural next step.
 
+## Workshop strategy: closer clip, not live Gateway
+
+The TechEx workshop honors the OpenClaw partnership branding without taking on the stage-reliability cost of running the Gateway live. The plan, locked with the sponsor:
+
+- **Live demo (minutes 0–50):** runs the in-process compatible architecture below. Three stage fallbacks (live MiniMax → mock MiniMax → captured replay).
+- **Closer (minutes 58–60):** plays a 30–60 second pre-recorded clip of the actual OpenClaw Gateway running the same agent with the same four tools. Zero stage risk, full partnership-branding visibility, lands the production deployment story right before attendees leave.
+
+The clip is the marketing artifact; the in-process implementation is the teaching artifact. Both are real. The migration path between them is documented below.
+
 ## Architectural seams
 
 | OpenClaw concept | This repo | File |

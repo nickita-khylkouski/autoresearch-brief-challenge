@@ -174,11 +174,15 @@ python3 inspect_run.py --run runs/<run-id>
 
 ## MiniMax AutoResearch Chess Demo
 
-This repo also includes a local-first TechEx demo for explaining AutoResearch with a chess Elo loop. An OpenClaw-style tool-calling agent built on MiniMax inspects the editable bot files, considers recent history, and proposes small unified diffs. The backend evaluates each candidate with fixed local matches, and only estimated Elo improvements are kept.
+This repo also includes the local-first TechEx 2026 workshop demo: *Building AI Coding Agents with OpenClaw and MiniMax*. The pitch in one line:
 
-The agent's full tool-call trace is persisted per iteration so attendees can see exactly what the model asked for and how it reasoned. See [`docs/openclaw_mapping.md`](./docs/openclaw_mapping.md) for how the agent modules map onto OpenClaw's gateway / context / react / tool-layer architecture.
+> Three ingredients of a modern coding agent: an architecture (OpenClaw), a model (MiniMax), and a loop (AutoResearch). The workshop builds all three on top of a constrained chess Elo problem.
 
-The demo loop is:
+A tool-calling agent built on the OpenClaw-compatible architecture (gateway / context / react / tool layers in `autoresearch_chess/agent/`) drives MiniMax to inspect the editable bot files, consider recent history, and propose small unified diffs. The backend evaluates each candidate with fixed local matches, and only estimated Elo improvements are kept.
+
+The agent's full tool-call trace is persisted per iteration so attendees can see exactly what the model asked for and how it reasoned. See [`docs/openclaw_mapping.md`](./docs/openclaw_mapping.md) for how the agent modules map onto OpenClaw's gateway / context / react / tool-layer architecture, and [`WORKSHOP_AGENDA.md`](./WORKSHOP_AGENDA.md) for the 60-minute session plan.
+
+The AutoResearch loop is:
 
 ```text
 goal + constrained editable files + objective eval + MiniMax iterations = compounding improvement
