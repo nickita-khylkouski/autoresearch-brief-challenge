@@ -1,372 +1,280 @@
-# Workshop Slide Spec & Presenter Runbook
+# Workshop Slide Design — Teaching Goals and Slide Plan
 
-Companion to [`WORKSHOP_AGENDA.md`](../WORKSHOP_AGENDA.md) and [`notebooks/workshop_colab.ipynb`](../notebooks/workshop_colab.ipynb).
+This document describes **what the workshop teaches** and the nine slides that support that teaching. It is paired with the lab notebook at [`notebooks/workshop_colab.ipynb`](../notebooks/workshop_colab.ipynb), which is where the audience actually does the work. The slides exist to frame the lab, not to duplicate it.
 
-This doc defines:
-1. The **9 slides** the workshop needs (no more, no less — the notebook IS the lab).
-2. **Exactly when** each slide is shown, what the presenter says, and which notebook cell the room is on.
-3. The **slide-generation prompt** at the bottom — paste into Gamma / Canva / Claude / GPT to produce the deck.
+The reading order for an instructor preparing this session:
 
-## Slide ↔ Agenda ↔ Notebook map
-
-| # | Slide title | When (min) | Agenda section | Notebook cell |
-|---|---|---|---|---|
-| 1 | The Punchline — Your Target Curve | 0–3 | §"The punchline" | `41f2ce9c` + `c5ede446` (§0) |
-| 2 | Three Ingredients · Architecture · Model · Loop | 3–5 | §"Architecture in one slide" | `ffdecbf0` (§1) |
-| 3 | OpenClaw Four Layers ↔ Four Files | 5–8 | §"Architecture in one slide" | `ffdecbf0` + `3c6e90fa` (§1) |
-| 4 | Why Loops Beat One-Shots *(§4 wait #1)* | ~35 | §"AutoResearch on your laptop" wait window | `295f3755` (§4) running in background |
-| 5 | The Eval Is The Only Thing The Agent Can't Fake *(§4 wait #2)* | ~38 | same | same |
-| 6 | MiniMax M2.7 — Same Loop, Frontier Scale *(§4 wait #3)* | ~41 | same | same |
-| 7 | Guardrails — Can You Do This At Work? | 55–58 | §"The Closer" | `2311605f` (§6) |
-| 8 | OpenClaw Gateway Closer Clip *(video slot, not a slide)* | 56–58 | same | same |
-| 9 | Resources & Follow-Up | 58–60 | §"Resources & follow-up" | `324c06a9` (§7) |
-
-**Optional adds** (use if room/timing allows):
-- Checkpoint cards ×3 (visual cue at minutes 18, 30, 46 — could be projector overlays instead of deck slides)
-- A pair-up reminder slide at minute 5
+1. **Learning outcomes** — what an attendee should be able to do or believe after sixty minutes.
+2. **The conceptual arc** — how the slides and the notebook together produce those outcomes.
+3. **The nine slides** — each described as a teaching moment with one concept and one misconception it corrects.
+4. **The slide-generation prompt** — paste into any deck-generation tool to produce a draft deck.
 
 ---
 
-## Slide 1 — The Punchline
+## Learning outcomes
 
-**When:** 0–3 min · **Notebook:** §0 (the captured Elo curve renders inline)
+By the end of the session, an attendee should be able to:
 
-**Headline:** *By minute 47, you will have a curve like this from your own laptop.*
+1. **State the AutoResearch pattern in one sentence** — *an agent + a measurable objective + a bounded edit surface + an accept/reject step* — and recognise it across different domains (chess bots, language-model training, build-time optimisation).
+2. **Name the four layers of a tool-calling agent** (Gateway, Context, ReAct, Tools) and explain what each layer is responsible for.
+3. **Explain why tool descriptions are part of the model's input**, not internal documentation, and predict what changes when one is rewritten.
+4. **Describe what an eval-driven loop catches that a single prompt cannot**, and identify the limits of that approach — the entry point to the guardrails discussion.
 
-**Body (in the room sees):**
-- Image: `artifacts/demo_replay/progress.png` (Elo curve climbing 629.6 → 1163.4 → 1276.1)
-- Subhead: **5 iterations · 1 accepted patch climbed it most · ~3 minutes runtime**
-
-**Presenter says:**
-> "Before we explain anything, here's what every one of you will produce. This curve came from a captured run. One of those climbs came from a single accepted patch — we'll inspect one of yours in 30 minutes."
-
-**Why this slide exists:** Anchors the target before any theory. Attendees sit through framing more patiently when they've seen the payoff.
+Every slide and every notebook section is tied back to one of these outcomes. If a slide does not serve one of them, it should not exist.
 
 ---
 
-## Slide 2 — Three Ingredients
+## The conceptual arc
 
-**When:** 3–5 min · **Notebook:** §1
+The workshop is structured as a small set of ideas. Each idea is introduced just before the audience experiences it firsthand. The slides do not duplicate experience — they frame it.
 
-**Headline:** *Architecture · Model · Loop*
-
-**Body (three-column table):**
-
-| Ingredient | Project | What it gives us |
+| Idea | Where the slide introduces it | Where the notebook makes it real |
 |---|---|---|
-| Architecture | **OpenClaw** | Four-layer pattern: Gateway · Context · ReAct · Tools |
-| Model | **MiniMax** | A model that tool-calls reliably under JSON-schema |
-| Loop | **AutoResearch** | Agent + objective eval + constrained surface + accept/reject |
+| **The pattern** — loops with evaluators beat single prompts | Slide 1, Slide 4 | The notebook as a whole is a loop the attendee runs |
+| **The architecture** — agents decompose into reusable layers | Slide 2, Slide 3 | Notebook section "How a tool-calling agent is structured" |
+| **The interface** — tools are descriptions the model reads | *(no slide; learned directly in the lab)* | Notebook section "Tools are descriptions the model reads" |
+| **The compounding** — value comes from many small evals | Slide 5, Slide 6 | Notebook section "The loop — many small evaluations" |
+| **The limits** — what a loop cannot guarantee on its own | Slide 7 | Notebook extensions surface this implicitly |
 
-**Presenter says:**
-> "Three ingredients of a modern coding agent. OpenClaw is how you structure the agent. MiniMax is the model inside it. AutoResearch is what happens when you put them in a loop with an eval. Today you build all three."
+The slides appear at three kinds of moments:
 
----
-
-## Slide 3 — OpenClaw Four Layers ↔ Four Files
-
-**When:** 5–8 min · **Notebook:** §1 cell `3c6e90fa` is what they see in the notebook
-
-**Headline:** *The architecture, on disk, in your cloned repo*
-
-**Body (two columns, file → role):**
-
-| OpenClaw layer | File in `autoresearch_chess/agent/` | What the lab uses |
-|---|---|---|
-| Gateway (entry point) | `gateway.py` | `ChessAgent.run_iteration` |
-| Context assembly | `context.py` | `build_initial_conversation` |
-| ReAct runtime | `react.py` | `run_react_loop` |
-| Tool layer | `tools.py` | `TOOLS` (5 tools) |
-
-**Footer:** *"The architecture is what teaches the pattern. The Gateway is one deployment of that pattern — clip at minute 56."*
-
-**Presenter says:**
-> "Four layers, four files. You can read the entire OpenClaw architecture by opening four files in your cloned repo. Now pair up with your neighbor — at 80 people, two-person debugging scales 2× with zero overhead."
+- **Before** an idea becomes real — Slides 1–3 introduce the outcome and the architecture before the attendees write any code.
+- **During** a wait window — Slides 4–6 carry the narrative while the audience's five-iteration loops run for three to five minutes.
+- **After** the work is done — Slides 7–9 land the limits, the production path, and the take-home.
 
 ---
 
-## Slide 4 — Why Loops Beat One-Shots *(§4 wait window, ~minute 35)*
+## The nine slides
 
-**When:** ~35 min · **Notebook:** Lab Step 5 cell `295f3755` is running on attendee laptops; presenter narrates over the wait
+Each slide is described with three lines: the **concept** it teaches, the **misconception** it corrects, and the one sentence the audience should walk away holding in their head.
 
-**Headline:** *One-shot agents guess. Research loops let reality correct them.*
+### Slide 1 — The outcome, before the explanation
 
-**Body (two-column comparison):**
+- **Concept:** What you will have at the end of the session.
+- **Misconception this corrects:** *AI demos are something I watch the presenter do; this will be the same.*
+- **Visual:** A real Elo curve climbing roughly 630 → 1280 across a few iterations — a curve the attendee will reproduce on their own machine.
+- **One-line take-away:** *By the end of this session, you will have a chart like this from your own machine — not from the presenter's.*
 
-| One-shot agent | Research loop |
-|---|---|
-| Guesses once | Tries, scores, learns, retries |
-| If the guess is wrong, the loop ends | Each failed attempt teaches what not to try |
-| Cannot read the code it tests | Reads the code, understands what it does |
-| Cannot change the experiment | Can rewrite the experiment's own structure |
+### Slide 2 — Three ingredients of a modern coding agent
 
-**Footer:** *"Right now, on your laptop, the agent is doing the right column."*
+- **Concept:** A working agent system is three independent components, not one.
+- **Misconception this corrects:** *An "AI agent" is one indivisible thing.*
+- **Body:**
 
-**Presenter says:**
-> "While your loops run, here's why this works. Random search samples settings. AutoResearch reads the code, changes mechanisms, and learns from each failed attempt. The five-minute Elo eval on your machine is doing the same job that val_bpb does in Karpathy's reference repo."
+  | Component | What it is | What it gives you |
+  |---|---|---|
+  | **Architecture** (OpenClaw) | Four reusable layers — Gateway, Context, ReAct, Tools | A blueprint you can implement once and reuse |
+  | **Model** (MiniMax) | A model that reliably emits structured tool calls | The primitive the layers compose around |
+  | **Loop** (AutoResearch) | Agent + objective evaluator + accept-or-reject | A way to compound small ideas into measurable progress |
 
-**Adapted from:** Auto Research.pptx slides 12 + 13.
+- **One-line take-away:** *The architecture, the model, and the loop are three separate decisions you can mix and match.*
 
----
+### Slide 3 — Four layers, four files
 
-## Slide 5 — The Eval Is The Only Thing The Agent Can't Fake *(§4 wait window, ~minute 38)*
+- **Concept:** The architecture is small enough that the entire blueprint fits in four files.
+- **Misconception this corrects:** *Agent frameworks are mysterious internals you take on faith.*
+- **Body:**
 
-**When:** ~38 min · **Notebook:** §4 still running
+  | Layer | File | Responsibility |
+  |---|---|---|
+  | **Gateway** | `gateway.py` | Entry point — one in, one out |
+  | **Context** | `context.py` | Assembles the conversation the model sees |
+  | **ReAct** | `react.py` | Drives the model–tool–model–tool cycle until a stop condition |
+  | **Tools** | `tools.py` | The five functions the model is allowed to call |
 
-**Headline:** *The quality of your metric determines the quality of the loop.*
+- **One-line take-away:** *You can read the entire agent in four files. There is no missing piece.*
 
-**Body (large central number with annotations):**
-- Big: `estimated_elo`
-- Caption: *one number from one script, not a debate*
-- Below: four short callouts
-  - Fully automatic — no human judgment needed
-  - Reproducible — same patch always scores the same
-  - Hard to argue with — it's a number, not an opinion
-  - The agent can fake everything else; it cannot fake this
+### Slide 4 — Why loops beat one-shots *(narrate during the wait window)*
 
-**Presenter says:**
-> "The single most important AutoResearch principle. The eval is the only thing the agent cannot fake. A patch can have a great-looking explanation, perfect commit message, beautiful diff — if it doesn't move the Elo, it gets rejected. Bad ideas are cheap. Good ideas compound."
+- **Concept:** A loop is *qualitatively* different from a single inference, not just *quantitatively* bigger.
+- **Misconception this corrects:** *A loop is just "run it more times until you get a good answer."*
+- **Body:**
 
-**Adapted from:** Auto Research.pptx slide 8 (val_bpb → estimated_elo).
+  | One-shot agent | Research loop |
+  |---|---|
+  | Guesses once | Tries, scores, learns, tries again |
+  | Wrong guess ends the run | Each failure narrows the next attempt |
+  | Cannot inspect the code it tests | Reads the code, understands what it does |
+  | Cannot change the experiment itself | Can rewrite its own scaffolding |
 
----
+- **One-line take-away:** *A loop is not "more chances"; it is a feedback channel from reality back into the model.*
 
-## Slide 6 — MiniMax M2.7 · Same Loop, Frontier Scale *(§4 wait window, ~minute 41)*
+### Slide 5 — The metric is the load-bearing decision
 
-**When:** ~41 min · **Notebook:** §4 may be finishing
+- **Concept:** Everything else in the loop is downstream of the metric.
+- **Misconception this corrects:** *The model is the important part; the eval is plumbing.*
+- **Body:** Centre the literal `estimated_elo`. Four supporting claims:
+  - Runs without human judgement.
+  - Reproducible — the same patch always scores the same.
+  - A number, not an opinion.
+  - The model can fake everything else about a patch — explanation, commit message, prose. It cannot fake this.
+- **One-line take-away:** *The quality of your metric determines the ceiling of your loop. Pick it deliberately.*
 
-**Headline:** *The loop on your laptop is a miniature of MiniMax M2.7's self-evolution loop.*
+### Slide 6 — The same pattern, at frontier scale
 
-**Body (six-step pipeline as a horizontal flow):**
+- **Concept:** What runs on the attendee's laptop is the small version of what MiniMax reports running on M2.7 during training.
+- **Misconception this corrects:** *Self-improving AI is a futuristic claim, not a real engineering practice.*
+- **Body:** Six-step horizontal pipeline — *Analyse failures → Build new skills → Modify scaffolding → Run evals → Update memory → Keep or revert.* Two reported figures: **+30%** on MiniMax's internal coding-agent eval, **100+** self-improvement rounds during training. *Footer:* self-reported by MiniMax; verify before citing externally.
+- **One-line take-away:** *Your edit surface is four files. Theirs is the model's own scaffolding. The pattern is the same.*
 
-`Analyze failures → Build new skills → Modify scaffolding → Run evals → Update memory → Keep or revert`
+### Slide 7 — Can you do this at work? Six failure modes, six mitigations
 
-**Stat callout:**
-- **+30%** on MiniMax's internal coding-agent eval
-- **100+** self-improvement rounds, no model retraining
-- Footnote: *Self-reported by MiniMax · training-time scaffolding search, frozen into the released checkpoint*
+- **Concept:** Loops without guardrails optimise the wrong thing, sometimes silently.
+- **Misconception this corrects:** *Once I have a metric, I am done thinking about correctness.*
+- **Body:**
 
-**Presenter says:**
-> "What you're running now is the same five-step loop MiniMax reports running on itself during training. Your edit surface is four files; theirs is the model's own scaffolding. Your eval is Elo; theirs is internal coding-agent benchmarks. Same pattern, bigger box."
+  | What goes wrong | How to prevent it |
+  |---|---|
+  | Metric gaming — the score moves, the thing doesn't | Track multiple metrics; wins must not regress others |
+  | Overfitting — short-run wins that don't last | Hard gates with minimum-threshold checks |
+  | Hidden regressions — primary up, something else quietly breaks | Secondary metrics in CI |
+  | Compute runaway — loop never stops | Budgets on runs and on spend |
+  | Broad permissions — agent touches what it shouldn't | Constrain the edit surface; isolate the branch |
+  | Secret leakage — credentials visible to the agent | Strip secrets from the agent's environment |
 
-**Adapted from:** Auto Research.pptx slides 19 + 20.
+- **One-line take-away:** *The loop optimises whatever you measure — even if you measured wrong. Guardrails are part of the design, not an afterthought.*
 
----
+### Slide 8 — Same agent, production runtime *(optional video)*
 
-## Slide 7 — Guardrails · Can You Do This At Work?
+- **Concept:** The architecture the audience ran in-process today is the same architecture that deploys behind a service boundary.
+- **Misconception this corrects:** *Notebook code and production code are different worlds.*
+- **Body:** A 30–60 second clip of the same agent on the OpenClaw Gateway. If the clip is not recorded, omit this slide and refer to the migration guide verbally — the take-away still lands.
+- **One-line take-away:** *The seam between "what you ran today" and "what production looks like" is a deployment step, not a rewrite.*
 
-**When:** 55–58 min · **Notebook:** §6 closer
+### Slide 9 — Take this home
 
-**Headline:** *Six failure modes, six mitigations*
-
-**Body (two-column table):**
-
-| What can go wrong | How to prevent it |
-|---|---|
-| Metric gaming — agent optimizes the score without improving the thing | Track multiple metrics; wins must not regress others |
-| Overfitting — short-run wins that don't hold up | Hard gates: minimum-threshold checks block bad merges |
-| Hidden regressions — primary metric up, something else quietly breaks | Secondary metrics in CI |
-| Compute runaway — loop runs forever, burns budget | Budgets: max runs, max spend, automatic stop |
-| Broad permissions — agent touches files it shouldn't | Constrained edit surface; isolated branches |
-| Secret leakage — credentials visible to the agent | Strip secrets from the agent's environment |
-
-**Footer:** *"The loop optimizes whatever you measure. Build guardrails on day one."*
-
-**Presenter says:**
-> "Every one of you is going to think 'can I do this at work?' Here's the honest answer. Six things go wrong, six fixes. Pick the metric carefully. Ship guardrails on day one. The loop optimizes whatever you measure — even if you measured wrong."
-
-**Adapted from:** Auto Research.pptx slides 29 + 30 merged.
-
----
-
-## Slide 8 — OpenClaw Gateway Closer Clip *(video, not a slide)*
-
-**When:** 56–58 min · **Notebook:** §6 closer
-
-**What plays:** 30–60 second pre-recorded clip — the same agent, same five tools, running through the actual OpenClaw Gateway.
-
-**Presenter line (over the clip):**
-> "What you ran on your laptop today was the OpenClaw architecture in-process. Here's the same agent on the actual OpenClaw Gateway. The migration is mechanical — see `docs/openclaw_mapping.md`. This is what production looks like, three days of work from where you are now."
-
-**Fallback if clip not ready:** Drop this segment; lean on `docs/openclaw_mapping.md` verbally. The workshop still delivers.
-
----
-
-## Slide 9 — Resources & Follow-Up
-
-**When:** 58–60 min · **Notebook:** §7
-
-**Headline:** *Take this home.*
-
-**Body (link list):**
-- 📂 **Repo:** `github.com/nickita-khylkouski/autoresearch-brief-challenge`
-- 📖 **OpenClaw migration guide:** `docs/openclaw_mapping.md`
-- 📊 **Conceptual companion deck:** `Auto Research.pptx` — Karpathy origin, MiniMax M2.7 case study, Ralph loops, Codex `/goal`, guardrails
-- 💬 **Follow-up channel:** *[Slack/Discord link from setup email]*
-- 🎁 **MiniMax credits:** *[link from setup email]*
-- ❓ **Questions board:** *[Slido / shared doc — top-voted questions answered now]*
-
-**Presenter answers the top 2–3 voted questions from the board.** Everything else goes async.
+- **Concept:** The lab is the start, not the end.
+- **Misconception this corrects:** *Workshops are a one-shot experience that ends when you leave the room.*
+- **Body:** Repository URL, migration guide, the companion conceptual deck (`Auto Research.pptx`), follow-up channel, MiniMax credits, questions board for written follow-up.
+- **One-line take-away:** *Everything you ran is yours to keep, modify, and extend.*
 
 ---
 
-## Things that need to be in place before the workshop (slide-related)
+## What the slides deliberately do not do
 
-These are the items from `WORKSHOP_AGENDA.md` §"Dependencies" that this slide spec depends on. Tick them off before dry-run:
+A teacher should not tell the audience what they have already experienced. The slides exist to introduce ideas just before they become real and to provide framing during attendee-driven work. The slides specifically do **not**:
 
-- [ ] Slide 1 punchline — `artifacts/demo_replay/progress.png` rendered crisply at projector resolution
-- [ ] Slide 3 architecture diagram — file paths verified against current `autoresearch_chess/agent/` layout
-- [ ] Slides 4–6 (§4 wait narration) — presenter has rehearsed the 3–5 min narration so it lands while the room's loops are running
-- [ ] Slide 8 — Gateway closer clip recorded (or this segment dropped from the runbook)
-- [ ] Slide 9 — follow-up channel link, questions board URL, MiniMax credits link all populated
-- [ ] All slides — readable from the back row at 80-person capacity (font size ≥28pt for body)
-- [ ] Dry-run with someone who hasn't seen the agenda — they should be able to follow which minute we're on from the slides alone
+- Explain how tool calling works internally — the audience sees it directly in the lab.
+- Walk through the five tools — the notebook prints them.
+- Show example diffs — the audience inspects their own.
+
+If a slide repeats what the notebook already does experientially, cut it.
 
 ---
 
-## Notebook-side items the slides assume work
+# Slide-generation prompt
 
-The slides reference specific notebook outputs. Verify these still produce the expected result:
-
-- [ ] §0 cell `c5ede446` displays the captured `progress.png` cleanly
-- [ ] §1 cell `3c6e90fa` prints the 5 tools, signatures of all four layers
-- [ ] §2 cell `c69e55ba` completes one iteration in under 60s in mock mode
-- [ ] §2 cell `25f736c6` prints a 3-round trace (`list_bot_files → read_bot_file → propose_patch`) in mock mode
-- [ ] §3 cell `72f581ab` shows a visible JSON-schema diff before/after
-- [ ] §4 cell `295f3755` completes 5 iterations in 3–5 minutes in mock mode
-- [ ] §4 cell `deebef0f` renders a `progress.png` curve that climbs in mock mode
-- [ ] §5 all three extensions (beginner / intermediate / advanced) succeed without errors
-- [ ] §6 closer markdown renders correctly (clip slot is plain text)
-- [ ] §7 archive cell `56d18800` produces a downloadable zip in Colab
-- [ ] Stage-reliability `replay` cell `e29ec9a2` works as a fallback
-
----
-
-# Slide-Generation Prompt (paste into Gamma / Canva / Claude / GPT)
-
-The text below is self-contained — copy from `---BEGIN PROMPT---` to `---END PROMPT---` and paste into any slide generation tool.
+Paste from `---BEGIN PROMPT---` to `---END PROMPT---` into any deck-generation tool (Gamma, Canva, Claude, GPT) to produce a draft deck.
 
 ---BEGIN PROMPT---
 
-You are generating a **9-slide presentation deck** for a 60-minute hands-on technical workshop titled **"Building AI Coding Agents with OpenClaw and MiniMax."** Hosts: MiniMax × AI Valley. Audience: 40–80 software engineers, mixed seniority, at the TechEx conference.
+You are generating a nine-slide deck for a sixty-minute hands-on workshop titled *"Building AI Coding Agents with OpenClaw and MiniMax."* The audience is forty to eighty software engineers at a developer conference. The session is a lab, not a talk: the audience spends roughly two-thirds of the time typing in a notebook. Your deck supplies framing, not content the lab already delivers.
 
-**Critical framing constraints:**
-- The workshop is a **hands-on lab, not a talk** — attendees spend ~40 of 60 minutes typing in a Colab notebook. Slides only carry framing material at specific moments. Do not pad.
-- **No marketing language.** Tool descriptions and MiniMax capabilities are demonstrated experientially in the lab; slides state facts, not pitches.
-- **One core idea per slide.** Maximum 5 bullets per slide.
-- **Use the exact file paths, function names, and numbers** in this brief. Do not paraphrase technical content.
+**Pedagogical constraints:**
+- Each slide carries one concept and corrects one misconception.
+- Slides never duplicate what the lab demonstrates experientially.
+- Slides never mention logistics (time markers, hand-raising, pair-up, room layout).
+- No promotional language. Tool capabilities are demonstrated by the lab, not claimed by slides.
+- File paths, function names, and numerical figures are quoted exactly. Do not paraphrase technical content.
 
 **Visual style:**
-- Clean, technical, suitable for an 80-person room (body text ≥28pt).
-- Dark theme acceptable.
-- Borrow visual language from technical decks: large stat callouts, monospace code where shown, two-column comparison tables, horizontal pipeline flows.
+- Clean and technical. Legible from the back of an eighty-person room (body text at least 28 pt).
+- Two-column tables where ideas contrast.
+- One large central element where one number or one term should dominate.
+- Horizontal pipeline diagrams for sequential processes.
 
-**Generate exactly these 9 slides:**
+**Generate exactly the following nine slides, in this order:**
 
----
+**Slide 1 — The outcome**
+- Title: *By the end of this session, you will have a chart like this from your own machine.*
+- Visual: an Elo curve climbing from roughly 630 to roughly 1280 over a small number of iterations.
+- No other body text.
 
-**SLIDE 1 — The Punchline**
-- Title: *By minute 47, you will have a curve like this from your own laptop*
-- Visual: a chess-bot Elo curve climbing from ~630 to ~1280 over 5 iterations (placeholder line chart if no image)
-- Subhead: **5 iterations · 1 accepted patch climbed it most · ~3 minutes runtime**
-- No other body text
-
----
-
-**SLIDE 2 — Three Ingredients**
+**Slide 2 — Three ingredients**
 - Title: *Architecture · Model · Loop*
-- Three-column table:
-  | Ingredient | Project | What it gives us |
+- Three-row table:
+
+  | Ingredient | Project | What it gives you |
   |---|---|---|
   | Architecture | OpenClaw | Four-layer pattern: Gateway · Context · ReAct · Tools |
-  | Model | MiniMax | A model that tool-calls reliably under JSON-schema |
-  | Loop | AutoResearch | Agent + objective eval + constrained surface + accept/reject |
+  | Model | MiniMax | A model that emits reliable structured tool calls |
+  | Loop | AutoResearch | Agent + objective evaluator + accept-or-reject |
 
----
-
-**SLIDE 3 — OpenClaw Four Layers ↔ Four Files**
+**Slide 3 — Four layers, four files**
 - Title: *The architecture, on disk, in your cloned repo*
-- Table mapping layer → file (all files in `autoresearch_chess/agent/`):
+- Table mapping each layer to its file in `autoresearch_chess/agent/`:
+
   | Layer | File | What the lab uses |
   |---|---|---|
   | Gateway | `gateway.py` | `ChessAgent.run_iteration` |
   | Context | `context.py` | `build_initial_conversation` |
   | ReAct | `react.py` | `run_react_loop` |
-  | Tools | `tools.py` | `TOOLS` (5 tools) |
-- Footer line: *"The architecture is what teaches the pattern. The Gateway is one deployment — clip at minute 56."*
+  | Tools | `tools.py` | `TOOLS` (five tools) |
 
----
+- Footer: *"The architecture is what teaches the pattern. The Gateway is one deployment of that pattern."*
 
-**SLIDE 4 — Why Loops Beat One-Shots**
+**Slide 4 — Why loops beat one-shots**
 - Title: *One-shot agents guess. Research loops let reality correct them.*
 - Two-column comparison:
+
   | One-shot agent | Research loop |
   |---|---|
   | Guesses once | Tries, scores, learns, retries |
-  | If wrong, the loop ends | Each failure teaches what not to try |
+  | Wrong guess ends the run | Each failure teaches the next attempt |
   | Cannot read the code it tests | Reads the code, understands what it does |
-  | Cannot change the experiment | Can rewrite the experiment's structure |
+  | Cannot change the experiment | Can rewrite the experiment's own structure |
+
 - Footer: *"Right now, on your laptop, the agent is doing the right column."*
 
----
+**Slide 5 — The metric is the load-bearing decision**
+- Title: *The quality of your metric determines the quality of the loop.*
+- Large central element: the literal term `estimated_elo` rendered in monospace, with caption *"one number from one script, not a debate."*
+- Four short bullets:
+  - Fully automatic — no human judgement needed.
+  - Reproducible — the same patch always scores the same.
+  - Hard to argue with — a number, not an opinion.
+  - The agent can fake everything else; it cannot fake this.
 
-**SLIDE 5 — The Eval Is The Only Thing The Agent Can't Fake**
-- Title: *The quality of your metric determines the quality of the loop*
-- Large central element: the words `estimated_elo` rendered as a big monospace label, with caption *"one number from one script, not a debate"*
-- Four short bullets below the central element:
-  - Fully automatic — no human judgment needed
-  - Reproducible — same patch always scores the same
-  - Hard to argue with — it's a number, not an opinion
-  - The agent can fake everything else; it cannot fake this
+**Slide 6 — MiniMax M2.7: same pattern, frontier scale**
+- Title: *Your laptop loop is a miniature of MiniMax's M2.7 self-evolution loop.*
+- Horizontal pipeline (six boxes connected by arrows): *Analyse failures → Build new skills → Modify scaffolding → Run evals → Update memory → Keep or revert.*
+- Two stat callouts:
+  - **+30%** on MiniMax's internal coding-agent eval.
+  - **100+** self-improvement rounds, no model retraining.
+- Footer: *"Self-reported by MiniMax. Training-time scaffolding search, frozen into the released checkpoint."*
 
----
-
-**SLIDE 6 — MiniMax M2.7 · Same Loop, Frontier Scale**
-- Title: *The loop on your laptop is a miniature of MiniMax M2.7's self-evolution loop*
-- Horizontal pipeline (six boxes connected by arrows):
-  `Analyze failures → Build new skills → Modify scaffolding → Run evals → Update memory → Keep or revert`
-- Two stat callouts to the right:
-  - **+30%** on MiniMax's internal coding-agent eval
-  - **100+** self-improvement rounds, no model retraining
-- Small footer: *Self-reported by MiniMax. Training-time scaffolding search, frozen into the released checkpoint.*
-
----
-
-**SLIDE 7 — Guardrails · Can You Do This At Work?**
-- Title: *Six failure modes, six mitigations*
+**Slide 7 — Six failure modes, six mitigations**
+- Title: *Can you do this at work?*
 - Two-column table:
-  | What can go wrong | How to prevent it |
+
+  | What goes wrong | How to prevent it |
   |---|---|
-  | Metric gaming — agent optimizes the score, not the thing | Track multiple metrics; wins must not regress others |
-  | Overfitting — short-run wins that don't hold up | Hard gates: minimum-threshold checks |
+  | Metric gaming — score moves, the thing doesn't | Track multiple metrics; wins must not regress others |
+  | Overfitting — short-run wins that don't last | Hard gates with minimum-threshold checks |
   | Hidden regressions — something quietly breaks | Secondary metrics in CI |
-  | Compute runaway — loop runs forever | Budgets: max runs, max spend |
-  | Broad permissions — agent touches files it shouldn't | Constrained edit surface; isolated branches |
-  | Secret leakage — credentials visible to the agent | Strip secrets from agent's environment |
-- Footer: *"The loop optimizes whatever you measure. Build guardrails on day one."*
+  | Compute runaway — loop never stops | Budgets on runs and on spend |
+  | Broad permissions — agent touches what it shouldn't | Constrain the edit surface; isolate the branch |
+  | Secret leakage — credentials visible to the agent | Strip secrets from the agent's environment |
 
----
+- Footer: *"The loop optimises whatever you measure. Build guardrails on day one."*
 
-**SLIDE 8 — OpenClaw Gateway Closer (video slot)**
+**Slide 8 — Same agent, production runtime *(video slot, optional)***
 - Title: *Same agent. Same five tools. Production runtime.*
-- Body: large placeholder for a 30–60 second video clip
+- Body: large placeholder for a 30–60 second clip.
 - One quote underneath:
-  > "What you ran on your laptop was the OpenClaw architecture in-process. Here's the same agent on the OpenClaw Gateway. The migration is mechanical — `docs/openclaw_mapping.md`. Three days of work from where you are now."
 
----
+  > "What you ran on your laptop today was the OpenClaw architecture in-process. Here is the same agent on the OpenClaw Gateway. The migration is mechanical — three days of work from where you are now."
 
-**SLIDE 9 — Resources & Follow-Up**
-- Title: *Take this home*
+**Slide 9 — Take this home**
+- Title: *Yours to keep, modify, and extend.*
 - Link list:
-  - 📂 Repo: `github.com/nickita-khylkouski/autoresearch-brief-challenge`
-  - 📖 OpenClaw migration guide: `docs/openclaw_mapping.md`
-  - 📊 Conceptual companion deck: `Auto Research.pptx`
-  - 💬 Follow-up channel: *(placeholder — add link)*
-  - 🎁 MiniMax credits: *(placeholder — add link)*
-  - ❓ Questions board: *(placeholder — add link)*
+  - Repository: `github.com/nickita-khylkouski/autoresearch-brief-challenge`
+  - OpenClaw migration guide: `docs/openclaw_mapping.md`
+  - Conceptual companion deck: `Auto Research.pptx`
+  - Follow-up channel: *(placeholder)*
+  - MiniMax credits: *(placeholder)*
+  - Questions board: *(placeholder)*
 
----
-
-**Output format:** 9 slides, in the order above, each with a clear title and the specified body. No additional slides, no agenda slide, no thank-you slide.
+**Output:** nine slides, in the order above, each with a clear title and the specified body. No agenda slide. No thank-you slide. No additional content.
 
 ---END PROMPT---
