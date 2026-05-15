@@ -1,12 +1,12 @@
 # Workshop Slide Design — Teaching Goals and Slide Plan
 
-This document describes **what the workshop teaches** and the nine slides that support that teaching. It is paired with the lab notebook at [`notebooks/workshop_colab.ipynb`](../notebooks/workshop_colab.ipynb), which is where the audience actually does the work. The slides exist to frame the lab, not to duplicate it.
+This document describes **what the workshop teaches** and the ten slides that support that teaching. It is paired with the lab notebook at [`notebooks/workshop_colab.ipynb`](../notebooks/workshop_colab.ipynb), which is where the audience actually does the work. The slides exist to frame the lab, not to duplicate it.
 
 The reading order for an instructor preparing this session:
 
 1. **Learning outcomes** — what an attendee should be able to do or believe after sixty minutes.
 2. **The conceptual arc** — how the slides and the notebook together produce those outcomes.
-3. **The nine slides** — each described as a teaching moment with one concept and one misconception it corrects.
+3. **The ten slides** — each described as a teaching moment with one concept and one misconception it corrects.
 4. **The slide-generation prompt** — paste into any deck-generation tool to produce a draft deck.
 
 ---
@@ -30,32 +30,42 @@ The workshop is structured as a small set of ideas. Each idea is introduced just
 
 | Idea | Where the slide introduces it | Where the notebook makes it real |
 |---|---|---|
-| **The pattern** — loops with evaluators beat single prompts | Slide 1, Slide 4 | The notebook as a whole is a loop the attendee runs |
-| **The architecture** — agents decompose into reusable layers | Slide 2, Slide 3 | Notebook section "How a tool-calling agent is structured" |
+| **The pattern** — loops with evaluators beat single prompts | Slide 2, Slide 5 | The notebook as a whole is a loop the attendee runs |
+| **The architecture** — agents decompose into reusable layers | Slide 3, Slide 4 | Notebook section "How a tool-calling agent is structured" |
 | **The interface** — tools are descriptions the model reads | *(no slide; learned directly in the lab)* | Notebook section "Tools are descriptions the model reads" |
-| **The compounding** — value comes from many small evals | Slide 5, Slide 6 | Notebook section "The loop — many small evaluations" |
-| **The limits** — what a loop cannot guarantee on its own | Slide 7 | Notebook extensions surface this implicitly |
+| **The compounding** — value comes from many small evals | Slide 6, Slide 7 | Notebook section "The loop — many small evaluations" |
+| **The limits** — what a loop cannot guarantee on its own | Slide 8 | Notebook extensions surface this implicitly |
 
 The slides appear at three kinds of moments:
 
-- **Before** an idea becomes real — Slides 1–3 introduce the outcome and the architecture before the attendees write any code.
-- **During** a wait window — Slides 4–6 carry the narrative while the audience's five-iteration loops run for three to five minutes.
-- **After** the work is done — Slides 7–9 land the limits, the production path, and the take-home.
+- **Before** an idea becomes real — Slides 1–4 set the frame, the outcome, and the architecture before the attendees write any code.
+- **During** a wait window — Slides 5–7 carry the narrative while the audience's five-iteration loops run for three to five minutes.
+- **After** the work is done — Slides 8–10 land the limits, the production path, and the take-home.
 
 ---
 
-## The nine slides
+## The ten slides
 
 Each slide is described with three lines: the **concept** it teaches, the **misconception** it corrects, and the one sentence the audience should walk away holding in their head.
 
-### Slide 1 — The outcome, before the explanation
+### Slide 1 — Title
+
+- **Concept:** The session frame in one screen — what we are doing together for the next sixty minutes.
+- **Misconception this corrects:** *(none — this is the opening; no misconception to correct yet.)*
+- **Body:**
+  - Title: **Building AI Coding Agents with OpenClaw and MiniMax**
+  - Subtitle: *A hands-on lab on tool-calling agents and self-improving research loops*
+  - Byline: *MiniMax × AI Valley · sixty minutes · hands-on lab*
+- **One-line take-away:** *For the next hour we are going to build an agent that improves a chess bot by editing its own code — and you will run it on your machine, not watch it on the screen.*
+
+### Slide 2 — The outcome, before the explanation
 
 - **Concept:** What you will have at the end of the session.
 - **Misconception this corrects:** *AI demos are something I watch the presenter do; this will be the same.*
 - **Visual:** A real Elo curve climbing roughly 630 → 1280 across a few iterations — a curve the attendee will reproduce on their own machine.
 - **One-line take-away:** *By the end of this session, you will have a chart like this from your own machine — not from the presenter's.*
 
-### Slide 2 — Three ingredients of a modern coding agent
+### Slide 3 — Three ingredients of a modern coding agent
 
 - **Concept:** A working agent system is three independent components, not one.
 - **Misconception this corrects:** *An "AI agent" is one indivisible thing.*
@@ -69,7 +79,7 @@ Each slide is described with three lines: the **concept** it teaches, the **misc
 
 - **One-line take-away:** *The architecture, the model, and the loop are three separate decisions you can mix and match.*
 
-### Slide 3 — Four layers, four files
+### Slide 4 — Four layers, four files
 
 - **Concept:** The architecture is small enough that the entire blueprint fits in four files.
 - **Misconception this corrects:** *Agent frameworks are mysterious internals you take on faith.*
@@ -84,7 +94,7 @@ Each slide is described with three lines: the **concept** it teaches, the **misc
 
 - **One-line take-away:** *You can read the entire agent in four files. There is no missing piece.*
 
-### Slide 4 — Why loops beat one-shots *(narrate during the wait window)*
+### Slide 5 — Why loops beat one-shots *(narrate during the wait window)*
 
 - **Concept:** A loop is *qualitatively* different from a single inference, not just *quantitatively* bigger.
 - **Misconception this corrects:** *A loop is just "run it more times until you get a good answer."*
@@ -99,7 +109,7 @@ Each slide is described with three lines: the **concept** it teaches, the **misc
 
 - **One-line take-away:** *A loop is not "more chances"; it is a feedback channel from reality back into the model.*
 
-### Slide 5 — The metric is the load-bearing decision
+### Slide 6 — The metric is the load-bearing decision
 
 - **Concept:** Everything else in the loop is downstream of the metric.
 - **Misconception this corrects:** *The model is the important part; the eval is plumbing.*
@@ -110,14 +120,14 @@ Each slide is described with three lines: the **concept** it teaches, the **misc
   - The model can fake everything else about a patch — explanation, commit message, prose. It cannot fake this.
 - **One-line take-away:** *The quality of your metric determines the ceiling of your loop. Pick it deliberately.*
 
-### Slide 6 — The same pattern, at frontier scale
+### Slide 7 — The same pattern, at frontier scale
 
 - **Concept:** What runs on the attendee's laptop is the small version of what MiniMax reports running on M2.7 during training.
 - **Misconception this corrects:** *Self-improving AI is a futuristic claim, not a real engineering practice.*
 - **Body:** Six-step horizontal pipeline — *Analyse failures → Build new skills → Modify scaffolding → Run evals → Update memory → Keep or revert.* Two reported figures: **+30%** on MiniMax's internal coding-agent eval, **100+** self-improvement rounds during training. *Footer:* self-reported by MiniMax; verify before citing externally.
 - **One-line take-away:** *Your edit surface is four files. Theirs is the model's own scaffolding. The pattern is the same.*
 
-### Slide 7 — Can you do this at work? Six failure modes, six mitigations
+### Slide 8 — Can you do this at work? Six failure modes, six mitigations
 
 - **Concept:** Loops without guardrails optimise the wrong thing, sometimes silently.
 - **Misconception this corrects:** *Once I have a metric, I am done thinking about correctness.*
@@ -134,14 +144,14 @@ Each slide is described with three lines: the **concept** it teaches, the **misc
 
 - **One-line take-away:** *The loop optimises whatever you measure — even if you measured wrong. Guardrails are part of the design, not an afterthought.*
 
-### Slide 8 — Same agent, production runtime *(optional video)*
+### Slide 9 — Same agent, production runtime *(optional video)*
 
 - **Concept:** The architecture the audience ran in-process today is the same architecture that deploys behind a service boundary.
 - **Misconception this corrects:** *Notebook code and production code are different worlds.*
 - **Body:** A 30–60 second clip of the same agent on the OpenClaw Gateway. If the clip is not recorded, omit this slide and refer to the migration guide verbally — the take-away still lands.
 - **One-line take-away:** *The seam between "what you ran today" and "what production looks like" is a deployment step, not a rewrite.*
 
-### Slide 9 — Take this home
+### Slide 10 — Take this home
 
 - **Concept:** The lab is the start, not the end.
 - **Misconception this corrects:** *Workshops are a one-shot experience that ends when you leave the room.*
@@ -168,7 +178,7 @@ Paste from `---BEGIN PROMPT---` to `---END PROMPT---` into any deck-generation t
 
 ---BEGIN PROMPT---
 
-You are generating a nine-slide deck for a sixty-minute hands-on workshop titled *"Building AI Coding Agents with OpenClaw and MiniMax."* The audience is forty to eighty software engineers at a developer conference. The session is a lab, not a talk: the audience spends roughly two-thirds of the time typing in a notebook. Your deck supplies framing, not content the lab already delivers.
+You are generating a ten-slide deck for a sixty-minute hands-on workshop titled *"Building AI Coding Agents with OpenClaw and MiniMax."* The audience is forty to eighty software engineers at a developer conference. The session is a lab, not a talk: the audience spends roughly two-thirds of the time typing in a notebook. Your deck supplies framing, not content the lab already delivers.
 
 **Pedagogical constraints:**
 - Each slide carries one concept and corrects one misconception.
@@ -183,14 +193,20 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
 - One large central element where one number or one term should dominate.
 - Horizontal pipeline diagrams for sequential processes.
 
-**Generate exactly the following nine slides, in this order:**
+**Generate exactly the following ten slides, in this order:**
 
-**Slide 1 — The outcome**
+**Slide 1 — Title**
+- Title: **Building AI Coding Agents with OpenClaw and MiniMax**
+- Subtitle: *A hands-on lab on tool-calling agents and self-improving research loops*
+- Byline: *MiniMax × AI Valley · sixty minutes · hands-on lab*
+- No other body content.
+
+**Slide 2 — The outcome**
 - Title: *By the end of this session, you will have a chart like this from your own machine.*
 - Visual: an Elo curve climbing from roughly 630 to roughly 1280 over a small number of iterations.
 - No other body text.
 
-**Slide 2 — Three ingredients**
+**Slide 3 — Three ingredients**
 - Title: *Architecture · Model · Loop*
 - Three-row table:
 
@@ -200,7 +216,7 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
   | Model | MiniMax | A model that emits reliable structured tool calls |
   | Loop | AutoResearch | Agent + objective evaluator + accept-or-reject |
 
-**Slide 3 — Four layers, four files**
+**Slide 4 — Four layers, four files**
 - Title: *The architecture, on disk, in your cloned repo*
 - Table mapping each layer to its file in `autoresearch_chess/agent/`:
 
@@ -213,7 +229,7 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
 
 - Footer: *"The architecture is what teaches the pattern. The Gateway is one deployment of that pattern."*
 
-**Slide 4 — Why loops beat one-shots**
+**Slide 5 — Why loops beat one-shots**
 - Title: *One-shot agents guess. Research loops let reality correct them.*
 - Two-column comparison:
 
@@ -226,7 +242,7 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
 
 - Footer: *"Right now, on your laptop, the agent is doing the right column."*
 
-**Slide 5 — The metric is the load-bearing decision**
+**Slide 6 — The metric is the load-bearing decision**
 - Title: *The quality of your metric determines the quality of the loop.*
 - Large central element: the literal term `estimated_elo` rendered in monospace, with caption *"one number from one script, not a debate."*
 - Four short bullets:
@@ -235,7 +251,7 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
   - Hard to argue with — a number, not an opinion.
   - The agent can fake everything else; it cannot fake this.
 
-**Slide 6 — MiniMax M2.7: same pattern, frontier scale**
+**Slide 7 — MiniMax M2.7: same pattern, frontier scale**
 - Title: *Your laptop loop is a miniature of MiniMax's M2.7 self-evolution loop.*
 - Horizontal pipeline (six boxes connected by arrows): *Analyse failures → Build new skills → Modify scaffolding → Run evals → Update memory → Keep or revert.*
 - Two stat callouts:
@@ -243,7 +259,7 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
   - **100+** self-improvement rounds, no model retraining.
 - Footer: *"Self-reported by MiniMax. Training-time scaffolding search, frozen into the released checkpoint."*
 
-**Slide 7 — Six failure modes, six mitigations**
+**Slide 8 — Six failure modes, six mitigations**
 - Title: *Can you do this at work?*
 - Two-column table:
 
@@ -258,14 +274,14 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
 
 - Footer: *"The loop optimises whatever you measure. Build guardrails on day one."*
 
-**Slide 8 — Same agent, production runtime *(video slot, optional)***
+**Slide 9 — Same agent, production runtime *(video slot, optional)***
 - Title: *Same agent. Same five tools. Production runtime.*
 - Body: large placeholder for a 30–60 second clip.
 - One quote underneath:
 
   > "What you ran on your laptop today was the OpenClaw architecture in-process. Here is the same agent on the OpenClaw Gateway. The migration is mechanical — three days of work from where you are now."
 
-**Slide 9 — Take this home**
+**Slide 10 — Take this home**
 - Title: *Yours to keep, modify, and extend.*
 - Link list:
   - Repository: `github.com/nickita-khylkouski/autoresearch-brief-challenge`
@@ -275,6 +291,6 @@ You are generating a nine-slide deck for a sixty-minute hands-on workshop titled
   - MiniMax credits: *(placeholder)*
   - Questions board: *(placeholder)*
 
-**Output:** nine slides, in the order above, each with a clear title and the specified body. No agenda slide. No thank-you slide. No additional content.
+**Output:** ten slides, in the order above, each with a clear title and the specified body. No agenda slide. No thank-you slide. No additional content.
 
 ---END PROMPT---
