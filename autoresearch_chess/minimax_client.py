@@ -370,57 +370,56 @@ def _last_tool_result(messages: list[dict[str, Any]], name: str) -> str | None:
     return None
 
 
-def _select_mock_diff(messages: list[dict[str, Any]]) -> str:
-    """Pick a mock diff based on the most recent read_bot_file result.
+def _select_mock_edit(messages: list[dict[str, Any]]) -> dict[str, str]:
+    """Pick a scripted edit_file payload based on the most recent read_bot_file.
 
-    Mirrors the prior ``_mock_patch`` selection logic so existing mock tests and
-    the ``stage-demo`` flow keep producing the same accepted diffs.
+    Mirrors the prior diff-selection logic so existing mock tests and the
+    ``stage-demo`` flow keep producing the same accepted edits — just expressed
+    via edit_file(old_str, new_str) instead of a hand-written unified diff.
     """
 
     config_blob = _last_tool_result(messages, "read_bot_file") or ""
     if "SEARCH_DEPTH = 1" in config_blob:
-        return (
-            "diff --git a/bot/config.py b/bot/config.py\n"
-            "--- a/bot/config.py\n"
-            "+++ b/bot/config.py\n"
-            "@@ -1,6 +1,6 @@\n"
-            "-SEARCH_DEPTH = 1\n"
-            "+SEARCH_DEPTH = 2\n"
-            " MATERIAL_WEIGHT = 1.0\n"
-            "-MOBILITY_WEIGHT = 0.0\n"
-            "+MOBILITY_WEIGHT = 2.0\n"
-            " KING_SAFETY_WEIGHT = 0.0\n"
-            "-USE_PIECE_SQUARES = False\n"
-            "+USE_PIECE_SQUARES = True\n"
-            " CAPTURE_FIRST = True\n"
-        )
+        return {
+            "path": "bot/config.py",
+            "old_str": (
+                "SEARCH_DEPTH = 1\n"
+                "MATERIAL_WEIGHT = 1.0\n"
+                "MOBILITY_WEIGHT = 0.0\n"
+                "KING_SAFETY_WEIGHT = 0.0\n"
+                "USE_PIECE_SQUARES = False\n"
+                "CAPTURE_FIRST = True\n"
+            ),
+            "new_str": (
+                "SEARCH_DEPTH = 2\n"
+                "MATERIAL_WEIGHT = 1.0\n"
+                "MOBILITY_WEIGHT = 2.0\n"
+                "KING_SAFETY_WEIGHT = 0.0\n"
+                "USE_PIECE_SQUARES = True\n"
+                "CAPTURE_FIRST = True\n"
+            ),
+        }
     if "KING_SAFETY_WEIGHT = 0.0" in config_blob and "SEARCH_DEPTH = 2" in config_blob:
-        return (
-            "diff --git a/bot/config.py b/bot/config.py\n"
-            "--- a/bot/config.py\n"
-            "+++ b/bot/config.py\n"
-            "@@ -1,6 +1,6 @@\n"
-            " SEARCH_DEPTH = 2\n"
-            " MATERIAL_WEIGHT = 1.0\n"
-            " MOBILITY_WEIGHT = 2.0\n"
-            "-KING_SAFETY_WEIGHT = 0.0\n"
-            "+KING_SAFETY_WEIGHT = 1.0\n"
-            " USE_PIECE_SQUARES = True\n"
-            " CAPTURE_FIRST = True\n"
-        )
-    return (
-        "diff --git a/bot/move_ordering.py b/bot/move_ordering.py\n"
-        "--- a/bot/move_ordering.py\n"
-        "+++ b/bot/move_ordering.py\n"
-        "@@ -21,4 +21,6 @@ def move_score(board: chess.Board, move: chess.Move) -> int:\n"
-        "     if board.gives_check(move):\n"
-        "-        score += 75\n"
-        "+        score += 150\n"
-        "+    if move.to_square in {chess.D4, chess.E4, chess.D5, chess.E5}:\n"
-        "+        score += 20\n"
-        "     if not config.CAPTURE_FIRST:\n"
-        "         score = -score\n"
-    )
+        return {
+            "path": "bot/config.py",
+            "old_str": "KING_SAFETY_WEIGHT = 0.0\n",
+            "new_str": "KING_SAFETY_WEIGHT = 1.0\n",
+        }
+    return {
+        "path": "bot/move_ordering.py",
+        "old_str": (
+            "    if board.gives_check(move):\n"
+            "        score += 75\n"
+            "    if not config.CAPTURE_FIRST:\n"
+        ),
+        "new_str": (
+            "    if board.gives_check(move):\n"
+            "        score += 150\n"
+            "    if move.to_square in {chess.D4, chess.E4, chess.D5, chess.E5}:\n"
+            "        score += 20\n"
+            "    if not config.CAPTURE_FIRST:\n"
+        ),
+    }
 
 
 def _mock_tool_call_round(
@@ -430,7 +429,7 @@ def _mock_tool_call_round(
 
     Round 1: list_bot_files
     Round 2: read_bot_file('bot/config.py')
-    Round 3: propose_patch(<diff selected from the read result>)
+    Round 3: edit_file(<args selected from the read result>)
     Round 4+: terminate with an empty plain-text response.
     """
 
@@ -461,16 +460,16 @@ def _mock_tool_call_round(
             ],
         )
     if round_index == 3:
-        diff = _select_mock_diff(messages)
+        edit_args = _select_mock_edit(messages)
         return (
-            "Submitting a focused patch based on what I observed.",
+            "Submitting a focused edit based on what I observed.",
             [
                 {
-                    "id": "call_propose",
+                    "id": "call_edit",
                     "type": "function",
                     "function": {
-                        "name": "propose_patch",
-                        "arguments": json.dumps({"unified_diff": diff}),
+                        "name": "edit_file",
+                        "arguments": json.dumps(edit_args),
                     },
                 }
             ],

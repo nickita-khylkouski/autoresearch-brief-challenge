@@ -2,8 +2,8 @@
 
 Calls the model with tool schemas, dispatches any returned tool calls,
 appends results back to the conversation, and repeats until the model
-either calls the terminal ``propose_patch`` tool or emits a final
-assistant message containing a diff.
+either calls the terminal ``edit_file`` tool or emits a final assistant
+message containing a diff (fallback).
 """
 
 from __future__ import annotations
@@ -112,7 +112,7 @@ def run_react_loop(
 
         if terminal_hit and tool_context.final_patch is not None:
             trace.final_patch = tool_context.final_patch
-            trace.stop_reason = "propose_patch_tool"
+            trace.stop_reason = "edit_file_tool"
             return trace
 
     return trace

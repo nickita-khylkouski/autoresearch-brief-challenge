@@ -3,9 +3,10 @@
 Each tool is a pure function over the agent's environment (filesystem,
 cached eval results, recent history). Tools are read-only or terminal —
 the ReAct loop never grants the model a tool that mutates the working
-tree mid-iteration. The terminal ``propose_patch`` tool ends the loop;
-the resulting diff is then validated by the existing guardrails and run
-in the sandboxed subprocess evaluator.
+tree mid-iteration. The terminal ``edit_file`` tool ends the loop; the
+resulting diff (synthesized by the tool from old_str/new_str) is then
+validated by the existing guardrails and run in the sandboxed subprocess
+evaluator.
 
 Tool schemas use the JSON-schema function format consumed by both the
 OpenAI tool-call protocol and the OpenClaw Gateway.
@@ -19,6 +20,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from ..guardrails import EDITABLE_FILES
+from ..patcher import compute_edit_diff
 
 
 ToolFn = Callable[[dict[str, Any], "ToolContext"], str]
@@ -65,7 +67,11 @@ def _read_bot_file(args: dict[str, Any], ctx: ToolContext) -> str:
     target = ctx.root / rel
     if not target.exists():
         return json.dumps({"error": f"missing:{rel}"})
-    return json.dumps({"path": rel, "content": target.read_text(encoding="utf-8")})
+    raw = target.read_text(encoding="utf-8")
+    numbered = "\n".join(
+        f"{i:4d}: {line}" for i, line in enumerate(raw.splitlines(), 1)
+    )
+    return json.dumps({"path": rel, "content": raw, "numbered": numbered})
 
 
 def _get_baseline_eval(_: dict[str, Any], ctx: ToolContext) -> str:
@@ -87,12 +93,26 @@ def _get_recent_history(args: dict[str, Any], ctx: ToolContext) -> str:
     return json.dumps(ctx.history[-limit:])
 
 
-def _propose_patch(args: dict[str, Any], ctx: ToolContext) -> str:
-    diff = str(args.get("unified_diff", ""))
-    if not diff.strip():
-        return json.dumps({"accepted": False, "error": "empty_diff"})
-    ctx.final_patch = diff
-    return json.dumps({"accepted": True, "note": "patch_queued_for_validation"})
+def _edit_file(args: dict[str, Any], ctx: ToolContext) -> str:
+    path = str(args.get("path", "")).strip()
+    old_str = args.get("old_str")
+    new_str = args.get("new_str")
+    if path not in EDITABLE_FILES:
+        return json.dumps(
+            {"ok": False, "error": f"not_editable:{path}", "editable": sorted(EDITABLE_FILES)}
+        )
+    if not isinstance(old_str, str) or not isinstance(new_str, str):
+        return json.dumps({"ok": False, "error": "old_str_and_new_str_must_be_strings"})
+    if not old_str:
+        return json.dumps({"ok": False, "error": "old_str_empty"})
+    diff_text, error = compute_edit_diff(ctx.root, path, old_str, new_str)
+    if error or diff_text is None:
+        return json.dumps({"ok": False, "error": error or "diff_synthesis_failed"})
+    ctx.final_patch = diff_text
+    preview = "\n".join(diff_text.splitlines()[:10])
+    return json.dumps(
+        {"ok": True, "path": path, "diff_preview": preview, "note": "patch_queued_for_validation"}
+    )
 
 
 TOOLS: list[Tool] = [
@@ -104,7 +124,12 @@ TOOLS: list[Tool] = [
     ),
     Tool(
         name="read_bot_file",
-        description="Read the current contents of one editable bot file.",
+        description=(
+            "Read the current contents of one editable bot file. Returns both "
+            "the raw text (in `content`) and a line-numbered view (in `numbered`). "
+            "When you later call `edit_file`, copy your `old_str` from the raw "
+            "`content` field — do NOT include line-number prefixes."
+        ),
         schema={
             "type": "object",
             "properties": {
@@ -143,24 +168,39 @@ TOOLS: list[Tool] = [
         handler=_get_recent_history,
     ),
     Tool(
-        name="propose_patch",
+        name="edit_file",
         description=(
-            "Submit a unified diff that edits one or more editable bot files. "
-            "Calling this tool ends the iteration. The patch is validated by "
-            "the guardrails and then evaluated in a sandboxed subprocess."
+            "Replace exactly one occurrence of `old_str` with `new_str` inside "
+            "an editable bot file. `old_str` must appear in the file verbatim "
+            "and exactly once — include enough surrounding context to make it "
+            "unique. Calling this tool ends the iteration: the synthesized "
+            "diff is validated by the guardrails and then evaluated in a "
+            "sandboxed subprocess."
         ),
         schema={
             "type": "object",
             "properties": {
-                "unified_diff": {
+                "path": {
                     "type": "string",
-                    "description": "Unified diff patch text.",
-                }
+                    "description": "Relative path of an editable bot file.",
+                    "enum": sorted(EDITABLE_FILES),
+                },
+                "old_str": {
+                    "type": "string",
+                    "description": (
+                        "Exact verbatim text from the file to replace. Must "
+                        "appear exactly once. Do not include line-number prefixes."
+                    ),
+                },
+                "new_str": {
+                    "type": "string",
+                    "description": "Replacement text. Must differ from old_str.",
+                },
             },
-            "required": ["unified_diff"],
+            "required": ["path", "old_str", "new_str"],
             "additionalProperties": False,
         },
-        handler=_propose_patch,
+        handler=_edit_file,
         terminal=True,
     ),
 ]

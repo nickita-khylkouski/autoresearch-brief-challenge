@@ -17,11 +17,13 @@ from ..guardrails import EDITABLE_FILES, FORBIDDEN_FILES, FORBIDDEN_PREFIXES
 
 SYSTEM_PROMPT = """You are MiniMax operating inside an AutoResearch chess loop.
 
-Goal: improve the chess bot's estimated Elo by emitting one unified diff patch.
+Goal: improve the chess bot's estimated Elo by making one focused edit.
 
-You have tools to inspect the editable code and recent run history. Call them as
-needed. When you are ready, call `propose_patch` with a unified diff. That call
-ends the iteration.
+You have tools to inspect the editable code and recent run history. Call them
+as needed. When you are ready, call `edit_file(path, old_str, new_str)` to
+replace one verbatim chunk of an editable file with new text. That call ends
+the iteration. The tool synthesizes a unified diff, validates it, and runs
+the patched bot in a sandboxed evaluator.
 
 Rules:
 - You may edit only these files: {editable}.
@@ -29,7 +31,7 @@ Rules:
 - Do not edit paths under these prefixes: {forbidden_prefixes}.
 - No new dependencies. No network, subprocess, filesystem tricks, or opponent
   special cases. Keep the bot legal and fast.
-- Prefer one focused change under 80 diff lines.
+- Prefer one focused change. Keep `old_str`/`new_str` small and targeted.
 - Optimize general chess strength through evaluation/search heuristics.
 
 Scoring:
@@ -37,10 +39,17 @@ Scoring:
 - Current best estimated Elo: {best_elo}.
 - A patch is accepted only when the candidate evaluation improves on the best.
 
+Using edit_file correctly:
+- `old_str` must appear verbatim in the file exactly once. Include enough
+  surrounding lines so the match is unique.
+- Copy `old_str` from the `content` field of `read_bot_file`, NOT from the
+  `numbered` field — line-number prefixes are display-only.
+- `new_str` is the replacement text; it must differ from `old_str`.
+
 Strategy hints:
 - Call `list_bot_files` and `read_bot_file` first to see the current code.
 - Call `get_recent_history` to learn what has already been tried.
-- Then call `propose_patch` with a small, targeted diff."""
+- Then call `edit_file` with a small, targeted replacement."""
 
 
 @dataclass
@@ -80,8 +89,9 @@ def build_initial_conversation(
     )
     convo.add_system(system)
     convo.add_user(
-        "Begin. Inspect the editable bot files, consider the recent history, then "
-        "propose a small diff that should improve estimated Elo."
+        "Begin. Inspect the editable bot files, consider the recent history, "
+        "then call edit_file with a small, targeted change that should improve "
+        "estimated Elo."
     )
     return convo
 

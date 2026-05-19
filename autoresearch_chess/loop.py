@@ -100,7 +100,7 @@ def run_loop(config: LoopConfig) -> dict[str, Any]:
                         candidate_eval = evaluate_repo_subprocess(
                             patch_result.candidate_root,
                             config.eval_config,
-                            timeout_seconds=90,
+                            timeout_seconds=180,
                         )
                         improvement = float(candidate_eval.get("estimated_elo", 0.0)) - float(best_eval.get("estimated_elo", 0.0))
                         decision["improvement"] = round(improvement, 1)

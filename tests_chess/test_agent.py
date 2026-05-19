@@ -55,17 +55,64 @@ def test_dispatch_read_bot_file_returns_content() -> None:
     assert "SEARCH_DEPTH" in payload["content"]
 
 
-def test_dispatch_propose_patch_is_terminal_and_stores_diff() -> None:
+def test_dispatch_edit_file_is_terminal_and_stores_diff() -> None:
+    """edit_file should synthesize a diff, store it, and end the iteration."""
+    from autoresearch_chess.config import ROOT
+
+    config_path = ROOT / "bot" / "config.py"
+    original = config_path.read_text(encoding="utf-8")
+    config_path.write_text(
+        "SEARCH_DEPTH = 1\nMATERIAL_WEIGHT = 1.0\nMOBILITY_WEIGHT = 0.0\n"
+        "KING_SAFETY_WEIGHT = 0.0\nUSE_PIECE_SQUARES = False\nCAPTURE_FIRST = True\n",
+        encoding="utf-8",
+    )
+    try:
+        ctx = _tool_ctx()
+        result, terminal = dispatch(
+            "edit_file",
+            {
+                "path": "bot/config.py",
+                "old_str": "SEARCH_DEPTH = 1\n",
+                "new_str": "SEARCH_DEPTH = 2\n",
+            },
+            ctx,
+        )
+        assert terminal
+        payload = json.loads(result)
+        assert payload["ok"] is True
+        assert ctx.final_patch is not None
+        assert "SEARCH_DEPTH = 2" in ctx.final_patch
+        assert "@@" in ctx.final_patch
+    finally:
+        config_path.write_text(original, encoding="utf-8")
+
+
+def test_dispatch_edit_file_string_not_found() -> None:
     ctx = _tool_ctx()
-    diff = "diff --git a/bot/config.py b/bot/config.py\n--- a/bot/config.py\n+++ b/bot/config.py\n@@\n-X\n+Y\n"
-    result, terminal = dispatch("propose_patch", {"unified_diff": diff}, ctx)
+    result, terminal = dispatch(
+        "edit_file",
+        {"path": "bot/config.py", "old_str": "ZZZ_NOT_IN_FILE", "new_str": "anything"},
+        ctx,
+    )
     assert terminal
-    assert json.loads(result)["accepted"] is True
-    assert ctx.final_patch == diff
+    payload = json.loads(result)
+    assert payload["ok"] is False
+    assert payload["error"] == "string_not_found"
+    assert ctx.final_patch is None
 
 
-def test_react_loop_terminates_on_propose_patch() -> None:
-    """The mock client should drive a three-round dance ending in propose_patch."""
+def test_dispatch_edit_file_rejects_non_editable_path() -> None:
+    ctx = _tool_ctx()
+    result, _ = dispatch(
+        "edit_file",
+        {"path": "challenge/evaluator.py", "old_str": "x", "new_str": "y"},
+        ctx,
+    )
+    assert "not_editable" in result
+
+
+def test_react_loop_terminates_on_edit_file() -> None:
+    """The mock client should drive a three-round dance ending in edit_file."""
 
     client = MiniMaxClient(MiniMaxSettings(keys=[]), mock=True)
     convo = build_initial_conversation(
@@ -79,7 +126,7 @@ def test_react_loop_terminates_on_propose_patch() -> None:
         chat_fn=client.chat_with_tools,
         max_rounds=6,
     )
-    assert trace.stop_reason == "propose_patch_tool"
+    assert trace.stop_reason == "edit_file_tool"
     assert trace.final_patch is not None
     tool_names_per_round = [
         [tc["name"] for tc in round_event["tool_calls"]] for round_event in trace.rounds
@@ -87,7 +134,7 @@ def test_react_loop_terminates_on_propose_patch() -> None:
     assert tool_names_per_round == [
         ["list_bot_files"],
         ["read_bot_file"],
-        ["propose_patch"],
+        ["edit_file"],
     ]
 
 
@@ -133,7 +180,7 @@ def test_agent_produces_patch_that_passes_guardrails() -> None:
     assert result.final_patch
     guard = validate_patch_text(result.final_patch)
     assert guard.ok, guard.reasons
-    assert result.stop_reason == "propose_patch_tool"
+    assert result.stop_reason == "edit_file_tool"
 
 
 def test_loop_writes_agent_trace_jsonl(tmp_path: Path) -> None:
@@ -163,7 +210,7 @@ def test_loop_writes_agent_trace_jsonl(tmp_path: Path) -> None:
         assert len(lines) == 3
         assert lines[0]["tool_calls"][0]["name"] == "list_bot_files"
         assert lines[1]["tool_calls"][0]["name"] == "read_bot_file"
-        assert lines[2]["tool_calls"][0]["name"] == "propose_patch"
+        assert lines[2]["tool_calls"][0]["name"] == "edit_file"
         assert summary["accepted"] == 1
     finally:
         config_path.write_text(original, encoding="utf-8")
