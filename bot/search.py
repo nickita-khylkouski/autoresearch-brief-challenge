@@ -7,9 +7,49 @@ from .evaluate import evaluate
 from .move_ordering import ordered_moves
 
 
-def _search(board: chess.Board, depth: int, alpha: int, beta: int) -> int:
+QUIESCENCE_DEPTH = 4  # Search up to 4 half-moves deep in quiescence
+STAND_PAT_CUTOFF = 150  # Reject captures worse than this without searching
+
+
+def _quiescence(board: chess.Board, alpha: int, beta: int, depth: int) -> int:
+    """Evaluate tactical captures/promotions at horizon to avoid horizon effect."""
     if depth <= 0 or board.is_game_over():
         return evaluate(board)
+
+    stand_pat = evaluate(board)
+    if board.turn == chess.WHITE:
+        if stand_pat >= beta:
+            return beta
+        alpha = max(alpha, stand_pat)
+        for move in ordered_moves(board):
+            if not board.is_capture(move) and not move.promotion:
+                continue
+            board.push(move)
+            score = _quiescence(board, alpha, beta, depth - 1)
+            board.pop()
+            alpha = max(alpha, score)
+            if alpha >= beta:
+                break
+        return alpha
+    else:
+        if stand_pat <= alpha:
+            return alpha
+        beta = min(beta, stand_pat)
+        for move in ordered_moves(board):
+            if not board.is_capture(move) and not move.promotion:
+                continue
+            board.push(move)
+            score = _quiescence(board, alpha, beta, depth - 1)
+            board.pop()
+            beta = min(beta, score)
+            if alpha >= beta:
+                break
+        return beta
+
+
+def _search(board: chess.Board, depth: int, alpha: int, beta: int) -> int:
+    if depth <= 0 or board.is_game_over():
+        return _quiescence(board, alpha, beta, QUIESCENCE_DEPTH)
 
     if board.turn == chess.WHITE:
         value = -10**9

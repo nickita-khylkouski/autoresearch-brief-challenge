@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 from typing import Any
 
+from .agent import ChessAgent
 from .artifacts import append_jsonl, ensure_run_dir, new_run_id, snapshot_best_bot, write_json, write_text
 from .chart import write_progress_png
 from .config import LoopConfig, ROOT, STAGE_LOOP_CONFIG
@@ -27,6 +28,7 @@ def run_loop(config: LoopConfig) -> dict[str, Any]:
     snapshot_best_bot(run_dir)
 
     client = MiniMaxClient.from_environment(mock=config.mock_minimax)
+    agent = ChessAgent(client, max_rounds=config.agent_max_rounds) if config.use_tool_calling else None
     run_mode = "mock" if config.mock_minimax else "live"
     history: list[dict[str, Any]] = []
     best_values = [float(best_eval.get("estimated_elo", 0.0))]
@@ -55,7 +57,27 @@ def run_loop(config: LoopConfig) -> dict[str, Any]:
             "reasons": [],
         }
         try:
-            patch_text, meta = client.propose_patch(prompt)
+            if agent is not None:
+                result = agent.run_iteration(
+                    root=ROOT,
+                    baseline_eval=baseline_eval,
+                    best_eval=best_eval,
+                    history=history,
+                )
+                patch_text = result.final_patch
+                meta = {
+                    "provider": "tool-calling-agent",
+                    "model": client.settings.model,
+                    "stop_reason": result.stop_reason,
+                    "rounds": len(result.trace.rounds),
+                    "max_rounds": result.meta.get("max_rounds"),
+                }
+                for round_event in result.trace.rounds:
+                    append_jsonl(iteration_dir / "agent_trace.jsonl", round_event)
+                decision["stop_reason"] = result.stop_reason
+                decision["agent_rounds"] = len(result.trace.rounds)
+            else:
+                patch_text, meta = client.propose_patch(prompt)
             write_json(iteration_dir / "response_meta.json", meta)
             write_text(iteration_dir / "response.md", client.redactor.redact(patch_text))
             write_text(iteration_dir / "patch.diff", client.redactor.redact(patch_text))
@@ -78,7 +100,7 @@ def run_loop(config: LoopConfig) -> dict[str, Any]:
                         candidate_eval = evaluate_repo_subprocess(
                             patch_result.candidate_root,
                             config.eval_config,
-                            timeout_seconds=90,
+                            timeout_seconds=180,
                         )
                         improvement = float(candidate_eval.get("estimated_elo", 0.0)) - float(best_eval.get("estimated_elo", 0.0))
                         decision["improvement"] = round(improvement, 1)
@@ -146,7 +168,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--stage", action="store_true")
     parser.add_argument("--mock-minimax", action="store_true")
     parser.add_argument("--accept-threshold-elo", type=float, default=None)
+    parser.add_argument(
+        "--no-tool-calling",
+        action="store_true",
+        help="Disable the OpenClaw-style tool-calling agent and use the legacy single-shot prompt.",
+    )
     args = parser.parse_args(argv)
+
+    use_tool_calling = not args.no_tool_calling
 
     if args.stage:
         config = STAGE_LOOP_CONFIG
@@ -158,12 +187,14 @@ def main(argv: list[str] | None = None) -> int:
             accept_threshold_elo=args.accept_threshold_elo if args.accept_threshold_elo is not None else config.accept_threshold_elo,
             mock_minimax=mock,
             eval_config=config.eval_config,
+            use_tool_calling=use_tool_calling,
         )
     else:
         config = LoopConfig(
             iterations=args.iterations or 5,
             accept_threshold_elo=args.accept_threshold_elo if args.accept_threshold_elo is not None else 15.0,
             mock_minimax=args.mock_minimax or os.environ.get("AUTORESEARCH_MOCK_MINIMAX") == "1",
+            use_tool_calling=use_tool_calling,
         )
     summary = run_loop(config)
     print(f"summary: best estimated Elo={summary['best_eval'].get('estimated_elo')} run_dir={summary['run_dir']}")

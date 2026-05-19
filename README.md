@@ -174,9 +174,15 @@ python3 inspect_run.py --run runs/<run-id>
 
 ## MiniMax AutoResearch Chess Demo
 
-This repo also includes a local-first TechEx demo for explaining AutoResearch with a chess Elo loop. MiniMax proposes small code changes to a constrained chess bot, the backend evaluates the candidate with fixed local matches, and only estimated Elo improvements are kept.
+This repo also includes a local-first demo of *Building AI Coding Agents with OpenClaw and MiniMax*. The idea in one line:
 
-The demo loop is:
+> Three ingredients of a modern coding agent: an architecture (OpenClaw), a model (MiniMax), and a loop (AutoResearch). The demo wires all three together against a constrained chess Elo problem.
+
+A tool-calling agent built on the OpenClaw-compatible architecture (gateway / context / react / tool layers in `autoresearch_chess/agent/`) drives MiniMax to inspect the editable bot files, consider recent history, and propose small unified diffs. The backend evaluates each candidate with fixed local matches, and only estimated Elo improvements are kept.
+
+The agent's full tool-call trace is persisted per iteration so you can see exactly what the model asked for and how it reasoned. See [`docs/openclaw_mapping.md`](./docs/openclaw_mapping.md) for how the agent modules map onto OpenClaw's gateway / context / react / tool-layer architecture.
+
+The AutoResearch loop is:
 
 ```text
 goal + constrained editable files + objective eval + MiniMax iterations = compounding improvement
@@ -194,19 +200,15 @@ make replay-best
 make chess-test
 ```
 
-Nickita's local development machine can run live MiniMax with:
-
-```bash
-MINIMAX_ENV_FILE=/Users/nickita/.claude-wafer/minimax.env make live-demo
-```
+To run a live MiniMax-backed iteration, point `MINIMAX_ENV_FILE` at a file containing your `MINIMAX_API_KEY` and run `make live-demo`.
 
 Demo commands:
 
 ```bash
 make setup       # create .venv and install chess demo dependencies
 make eval        # evaluate the weak baseline chess bot
-make stage-demo  # stage-safe mock MiniMax loop
-make live-demo   # one live MiniMax-backed stage iteration
+make stage-demo  # mock MiniMax loop (no API key required)
+make live-demo   # one live MiniMax-backed iteration
 make replay-best # replay captured successful run without API/network
 make chess-test  # run chess demo pytest suite
 ```
@@ -221,8 +223,6 @@ MiniMax may edit only:
 - `bot/config.py`
 
 The evaluator, benchmark opponents, tests, artifacts, env files, and dependency files are guarded. Candidate evals run in a timed subprocess and are rejected on timeout, illegal moves, forbidden edits, crashes, or insufficient Elo improvement.
-
-See [MINIMAX_AUTORESEARCH_CHESS_PRD.md](./MINIMAX_AUTORESEARCH_CHESS_PRD.md) for the full product spec.
 
 ## Integrity Guarantees
 
